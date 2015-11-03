@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>下拉刷新动画效果的实现 | 疯狂的冲浪者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我们修改流行的下拉刷新库 EGOTableViewPullRefresh 来完成目前多数APP都具备的下拉刷新动画，下面说说它实现的基本原理。
+通过代理方法 - (void)scrollViewDidScroll: 获得当前 scrollView.contentOffset.y 的值，通过这个值的变化作各种的动画效果，例如演示图中的慢慢填充的效果。当用户放开手后- (void)scrollView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="下拉刷新动画效果的实现">
+<meta property="og:url" content="http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/index.html">
+<meta property="og:site_name" content="疯狂的冲浪者">
+<meta property="og:description" content="我们修改流行的下拉刷新库 EGOTableViewPullRefresh 来完成目前多数APP都具备的下拉刷新动画，下面说说它实现的基本原理。
+通过代理方法 - (void)scrollViewDidScroll: 获得当前 scrollView.contentOffset.y 的值，通过这个值的变化作各种的动画效果，例如演示图中的慢慢填充的效果。当用户放开手后- (void)scrollView">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/pullRefreshAnimation.gif">
+<meta property="og:updated_time" content="2015-11-03T09:57:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="下拉刷新动画效果的实现">
+<meta name="twitter:description" content="我们修改流行的下拉刷新库 EGOTableViewPullRefresh 来完成目前多数APP都具备的下拉刷新动画，下面说说它实现的基本原理。
+通过代理方法 - (void)scrollViewDidScroll: 获得当前 scrollView.contentOffset.y 的值，通过这个值的变化作各种的动画效果，例如演示图中的慢慢填充的效果。当用户放开手后- (void)scrollView">
+  
+    <link rel="alternative" href="/atom.xml" title="疯狂的冲浪者" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/image/icon.JPG" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">冲浪</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">爱摄影的码农</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/CrazySurfBoy" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">冲浪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/image/icon.JPG" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">冲浪</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">爱摄影的码农</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/CrazySurfBoy" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-PullRefreshAnimation" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/03/PullRefreshAnimation/" class="article-date">
+  	<time datetime="2015-11-03T09:57:01.000Z" itemprop="datePublished">2015-11-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      下拉刷新动画效果的实现
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们修改流行的下拉刷新库 <a href="https://github.com/enormego/EGOTableViewPullRefresh" target="_blank" rel="external">EGOTableViewPullRefresh</a> 来完成目前多数APP都具备的下拉刷新动画，下面说说它实现的基本原理。</p>
+<p><strong>通过代理方法 <code>- (void)scrollViewDidScroll:</code> 获得当前 <code>scrollView.contentOffset.y</code> 的值，通过这个值的变化作各种的动画效果，例如演示图中的慢慢填充的效果。<br>当用户放开手后<code>- (void)scrollViewDidEndDragging:</code> 触发，当判定<code>y</code>值达到某一个负数时，就可以判定是下拉刷新操作，否而当作放弃操作。然后通过 <code>UIEdgeInsetMake</code> 设置 <code>scroll.contnetInset</code>，就可以显示刷新时间、加载等信息。当我们完成请求后调用方法重新设置 <code>scroll.contentInset</code> 的 <code>UIEdgeInsertMake top 0</code> 并设置过渡动画效果;</strong></p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/PullRefreshAnimation" target="_blank" rel="external">（完整的示例下载）</a>：</p>
+<p><img src="/image/pullRefreshAnimation.gif" alt="演示"> </p>
+<p>下面我要看看代码是如何实现的 ( UI是用代码创建的，你很方便的能修改 )</p>
+<a id="more"></a>
+<h3 id="1、旋转的加载动画类_PullActivityIndicator"><strong>1、旋转的加载动画类 PullActivityIndicator</strong></h3><p><strong>这个类负责将两张图片叠加在一起，并将最底的那一种图片无限的旋转达到加载动画的效果</strong></p>
+<p>创建一个 <code>PullActivityIndicator</code> 自定义的类，负责加载旋转动画效果<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startAnimating &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否已经常见过动画，如果已经创建则不再创建动画</span></span><br><span class="line">    <span class="built_in">CAAnimation</span> *exiestAnimation = [<span class="keyword">self</span><span class="variable">.animateCircle</span><span class="variable">.layer</span> animationForKey:<span class="string">@"rotate"</span>];</span><br><span class="line">    <span class="keyword">if</span> (exiestAnimation) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 显示</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 设置动画让它旋转起来</span></span><br><span class="line">    <span class="built_in">CABasicAnimation</span> *animation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"transform.rotation.z"</span>];</span><br><span class="line">    animation<span class="variable">.fromValue</span> = @<span class="number">0</span>;</span><br><span class="line">    animation<span class="variable">.toValue</span> = @(<span class="number">2</span>*M_PI);</span><br><span class="line">    animation<span class="variable">.repeatCount</span> = HUGE_VALF;</span><br><span class="line">    animation<span class="variable">.duration</span> = <span class="number">1.0</span>f;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.animateCircle</span><span class="variable">.layer</span> addAnimation:animation forKey:<span class="string">@"rotate"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当加载完成后调用停止方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 停止动画</span></span><br><span class="line">- (<span class="keyword">void</span>)stopAnimating &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.animateCircle</span><span class="variable">.layer</span> removeAllAnimations];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的类，我们会在<code>EGOTableViewPullRefresh</code> 这个类中创建并使用，相当简单。</p>
+<h3 id="2、_遮罩动画效果类_PullMaskProgress"><strong>2、 遮罩动画效果类 PullMaskProgress</strong></h3><p><strong>通过传入值百分比，灰色的图片将从灰色图片渐渐的变成全蓝色的图片，当然你可以根据你喜欢改图标和颜色</strong><br>画出一个正方形，并使它在灰色图像也就是Logo的位置下方<br>关于<code>CALayer</code>的 <code>mask</code>可以参考这里 <a href="http://www.cocoachina.com/ios/20151012/13637.html" target="_blank" rel="external">（使用CALayer的Mask实现注水动画效果）</a><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获得画出上下的正方形</span></span><br><span class="line">- (<span class="built_in">CALayer</span> *)crateMaskLayer &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CALayer</span> *mask = [<span class="built_in">CALayer</span> layer];</span><br><span class="line">    mask<span class="variable">.frame</span> = <span class="keyword">self</span><span class="variable">.colorImageView</span><span class="variable">.bounds</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 画出一个矩形</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.maskLayerDown</span> = [<span class="built_in">CAShapeLayer</span> layer];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.maskLayerDown</span><span class="variable">.bounds</span> = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, PullMaskWidth, PullMaskHeight);</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.maskLayerDown</span><span class="variable">.fillColor</span> = [<span class="built_in">UIColor</span> greenColor]<span class="variable">.CGColor</span>; </span><br><span class="line">    <span class="keyword">self</span><span class="variable">.maskLayerDown</span><span class="variable">.path</span> = [<span class="built_in">UIBezierPath</span> bezierPathWithRect:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, PullMaskWidth, PullMaskHeight)]<span class="variable">.CGPath</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.maskLayerDown</span><span class="variable">.position</span> = <span class="built_in">CGPointMake</span>(PullMaskWidth/<span class="number">2</span>, PullMaskHeight + <span class="number">15</span>); <span class="comment">// 使它在灰色图标的下面</span></span><br><span class="line">    [mask addSublayer:<span class="keyword">self</span><span class="variable">.maskLayerDown</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 测试用，查看蒙板的位置</span></span><br><span class="line">    <span class="comment">//[self.layer addSublayer:self.maskLayerDown];</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> mask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过设置 <code>- (void)setMaskPercent:</code> 传入的百分比，绿色的方形将会渐渐的往上移动，实现一个类似填充的效果（实际上是蓝色的图标）。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置蒙板占图像的百分比</span></span><br><span class="line">- (<span class="keyword">void</span>)setMaskPercent:(<span class="keyword">float</span>)percent &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">float</span> offsetY = percent * (PullMaskHeight + <span class="number">15</span> - PullMaskHeight/<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.maskLayerDown</span><span class="variable">.position</span> = <span class="built_in">CGPointMake</span>(PullMaskWidth/<span class="number">2</span>, PullMaskHeight + <span class="number">15</span> - offsetY);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码实现了由0.0 - 1.0的渐变效果，下面我们要直接来修改 <code>EGOTableViewPullRefresh</code> 这个类要实现我们要的效果。</p>
+<h3 id="3、修改_EGOTableViewPullRefresh"><strong>3、修改 EGOTableViewPullRefresh</strong></h3><p>关键的部分我会说一下，详细的可以看完整的Demo，原部分代码我没有清掉，只是注译了。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)egoRefreshScrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView &#123;  </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 显示灰色的图标，目的是为了加载完了使它复位</span></span><br><span class="line">  <span class="keyword">if</span> (_state == EGOOPullRefreshNormal) &#123;</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt; -<span class="number">1</span> &amp;&amp; scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &gt; -<span class="number">10</span>) &#123;</span><br><span class="line">      <span class="keyword">self</span><span class="variable">.pullMaskProgress</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (_state == EGOOPullRefreshLoading) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">CGFloat</span> offset = MAX(scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> * -<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    offset = MIN(offset, <span class="number">60</span>);</span><br><span class="line">    scrollView<span class="variable">.contentInset</span> = <span class="built_in">UIEdgeInsetsMake</span>(offset, <span class="number">0.0</span>f, <span class="number">0.0</span>f, <span class="number">0.0</span>f);</span><br><span class="line">    </span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (scrollView<span class="variable">.isDragging</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算百分比，并设置过渡的效果</span></span><br><span class="line">    <span class="keyword">float</span> p = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt; -<span class="number">20</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果超过 y 起过了-45，设置成百分百</span></span><br><span class="line">        <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt; - <span class="number">65</span>) &#123;</span><br><span class="line">            p = <span class="number">1.0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            p = (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> + <span class="number">10</span>) / -<span class="number">65</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.pullMaskProgress</span> setMaskPercent:p]; <span class="comment">// 遮罩会根据百分比向上移，会有一个过渡的效果</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">BOOL</span> _loading = <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">if</span> ([_delegate respondsToSelector:<span class="keyword">@selector</span>(egoRefreshTableHeaderDataSourceIsLoading:)]) &#123;</span><br><span class="line">      _loading = [_delegate egoRefreshTableHeaderDataSourceIsLoading:<span class="keyword">self</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (_state == EGOOPullRefreshPulling &amp;&amp; scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &gt; -<span class="number">65.0</span>f &amp;&amp; scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt; <span class="number">0.0</span>f &amp;&amp; !_loading) &#123;</span><br><span class="line"></span><br><span class="line">      [<span class="keyword">self</span> setState:EGOOPullRefreshNormal];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_state == EGOOPullRefreshNormal &amp;&amp; scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt; -<span class="number">65.0</span>f &amp;&amp; !_loading) &#123;</span><br><span class="line">      [<span class="keyword">self</span> setState:EGOOPullRefreshPulling];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentInset</span><span class="variable">.top</span> != <span class="number">0</span>) &#123;</span><br><span class="line">      scrollView<span class="variable">.contentInset</span> = <span class="built_in">UIEdgeInsetsZero</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码我们通过 <code>scrollView.contentOffset.y</code> 的值计算出下拉的幅度来判断是否进行下拉操作和遮罩百分的动画效果。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 状态设置  </span></span><br><span class="line">- (<span class="keyword">void</span>)setState:(EGOPullRefreshState)aState&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">switch</span> (aState) &#123;</span><br><span class="line">    <span class="keyword">case</span> EGOOPullRefreshPulling:</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> EGOOPullRefreshNormal: <span class="comment">// 正常</span></span><br><span class="line">      </span><br><span class="line">      [<span class="keyword">self</span><span class="variable">.pullActivityIndicator</span> stopAnimating]; </span><br><span class="line"></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> EGOOPullRefreshLoading: <span class="comment">// 正在加载</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 开始加载，开始旋转动画</span></span><br><span class="line">      [<span class="keyword">self</span><span class="variable">.pullActivityIndicator</span> startAnimating];</span><br><span class="line">      <span class="keyword">self</span><span class="variable">.pullMaskProgress</span><span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">      [<span class="keyword">self</span><span class="variable">.pullMaskProgress</span> setMaskPercent:<span class="number">0.0</span>];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  _state = aState;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过不同的状态进行设置不同的加载效果</p>
+<h3 id="总结"><strong>总结</strong></h3><p>由于用到的东西挺多的不能一一的详解，所以我都会在Demo里的注译得很清楚。这也是我平时工作的习惯，也是一起共事的同事很少来问我这是什么原因。</p>
+<p>只要你理解了整个的下拉刷新的原理，你可以做成目前所有流行的下拉刷新效果，他们的原理也是一至。再强大的教程也不如一份完整的Demo实在。</p>
+<p>源码点击这里 <a href="https://github.com/CrazySurfBoy/PullRefreshAnimation" target="_blank" rel="external">（示例下载）</a>。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/10/30/TableViewVisual/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">下拉刷新动画效果的实现</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="PullRefreshAnimation" data-title="下拉刷新动画效果的实现" data-url="http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 冲浪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
