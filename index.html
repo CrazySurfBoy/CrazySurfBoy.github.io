@@ -150,6 +150,64 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-UIWebView+JS" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/16/UIWebView+JS/" class="article-date">
+  	<time datetime="2015-11-16T08:53:33.000Z" itemprop="datePublished">2015-11-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/16/UIWebView+JS/">UIWebView+JS图片缓存实现</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。</p>
+</blockquote>
+<p>这个页主要使用 <code>UIWebView + HTML</code> 展示数据，另外部分 <code>View</code> 和  <code>UIWebView</code> 添加到 <code>UIScrollView</code>,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：<code>MGTemplateEngine</code> 配置多种模板展示？由于运营的需求是每条线路样式和内容都会不一样无法归类成N个模板，再加上我们需要在多个平台中使用同(So…你懂的)，只能尽最大的程度去忧化。</p>
+<p><img src="/image/UIWebView_1.png" alt="演示">  <img src="/image/UIWebView_2.png" alt="演示"></p>
+<p>接下来看一下如何将加载速度提升2-3倍</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/16/UIWebView+JS/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-PullRefreshAnimation" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

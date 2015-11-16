@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>UIWebView+JS图片缓存实现 | 疯狂的冲浪者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。
+
+这个页主要使用 UIWebView + HTML 展示数据，另外部分 View 和  UIWebView 添加到 UIScrollView,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：MGTemplateEngine 配置多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIWebView+JS图片缓存实现">
+<meta property="og:url" content="http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/index.html">
+<meta property="og:site_name" content="疯狂的冲浪者">
+<meta property="og:description" content="因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。
+
+这个页主要使用 UIWebView + HTML 展示数据，另外部分 View 和  UIWebView 添加到 UIScrollView,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：MGTemplateEngine 配置多">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/UIWebView_1.png">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/UIWebView_2.png">
+<meta property="og:updated_time" content="2015-11-16T08:53:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UIWebView+JS图片缓存实现">
+<meta name="twitter:description" content="因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。
+
+这个页主要使用 UIWebView + HTML 展示数据，另外部分 View 和  UIWebView 添加到 UIScrollView,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：MGTemplateEngine 配置多">
+  
+    <link rel="alternative" href="/atom.xml" title="疯狂的冲浪者" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/image/icon.JPG" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">冲浪</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">爱摄影的码农</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/CrazySurfBoy" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">冲浪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/image/icon.JPG" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">冲浪</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">爱摄影的码农</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/CrazySurfBoy" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-UIWebView+JS" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/16/UIWebView+JS/" class="article-date">
+  	<time datetime="2015-11-16T08:53:33.000Z" itemprop="datePublished">2015-11-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UIWebView+JS图片缓存实现
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。</p>
+</blockquote>
+<p>这个页主要使用 <code>UIWebView + HTML</code> 展示数据，另外部分 <code>View</code> 和  <code>UIWebView</code> 添加到 <code>UIScrollView</code>,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：<code>MGTemplateEngine</code> 配置多种模板展示？由于运营的需求是每条线路样式和内容都会不一样无法归类成N个模板，再加上我们需要在多个平台中使用同(So…你懂的)，只能尽最大的程度去忧化。</p>
+<p><img src="/image/UIWebView_1.png" alt="演示">  <img src="/image/UIWebView_2.png" alt="演示"></p>
+<p>接下来看一下如何将加载速度提升2-3倍</p>
+<a id="more"></a>
+<h3 id="1、页面数据组成的方式"><strong>1、页面数据组成的方式</strong></h3><p>首先获取详细的<code>HTML</code>代码并在最后加上<code>JS</code>，然后替换图片地址并设置一个新的属性，这一步是为了加快加载的速度和后续的<code>JS</code>处理。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取HMTL内容</span></span><br><span class="line">- (<span class="keyword">void</span>)getHTML &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 读取服务端的HTML</span></span><br><span class="line">    <span class="built_in">NSString</span> *urlStr = <span class="string">@"http://www.crazysurfboy.com/app-1000.html"</span>;</span><br><span class="line">    contentHtml = [<span class="built_in">NSString</span> stringWithContentsOfURL:[<span class="built_in">NSURL</span> URLWithString:urlStr] encoding: <span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取本地JS文件，把JS加到最后面</span></span><br><span class="line">    <span class="built_in">NSString</span> *jsPath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"DetalJavascript"</span> ofType:<span class="string">@"html"</span>];</span><br><span class="line">    <span class="built_in">NSString</span>* jsHtml = [<span class="built_in">NSString</span> stringWithContentsOfFile:jsPath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认加载的图片</span></span><br><span class="line">    <span class="built_in">NSString</span> *imageHTMLString = <span class="string">@"src=\"http://www.crazysurfboy.com/uploads/default_image_logo.png\" asrc"</span>;</span><br><span class="line">    contentHtml = [contentHtml stringByReplacingOccurrencesOfString:<span class="string">@"src"</span> withString:imageHTMLString];</span><br><span class="line">    contentHtml = [contentHtml stringByAppendingString:jsHtml];</span><br><span class="line">    </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.htmlWebView</span> loadHTMLString:contentHtml baseURL:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过产品<code>id</code>获取整个线路的<code>HMTL</code>加载到 <code>UIWebView</code> 再通过<code>JS</code>的方法得到<code>HTML</code>的总高度。此时<code>headerView</code>已添加到了 <code>detailScrollView</code> 占300高度，此时只需要把<code>UIWebView</code>添加进去设置好<code>y</code>值，然后添加到 <code>detailScrollView</code>，再重新设置 <code>detailScrollView.contentSize</code> </p>
+<h3 id="2、WebViewJavascriptBridge"><strong>2、WebViewJavascriptBridge</strong></h3><p>参考资料：<a href="http://honglu.me/2014/09/27/WebViewJavascriptBridge使用/" target="_blank" rel="external">WebViewJavascriptBridge使用</a></p>
+<p>以往简单的操作通常用<code>webView:shouldStartLoadWithRequest:navigationType:</code> 和 <code>stringByEvaluatingJavaScriptFromString:</code> 进行<code>JS</code>和<code>OC</code>互相调用。对于相对复杂的操作也许就没有这么方便了。所以我们会使用开源库 <code>WebViewJavascriptBridge</code><br><strong>GitHub</strong>:<a href="https://github.com/marcuswestin/WebViewJavascriptBridge" target="_blank" rel="external">WebViewJavascriptBridge</a></p>
+<p>OC端：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> WebViewJavascriptBridge* bridge;</span><br></pre></td></tr></table></figure></p>
+<p>在<code>viewDidLoad</code> 初始化代码如下，在初始化中直接包含了一个用于接收JS的回调：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这一段初始化都是一样的</span></span><br><span class="line"><span class="keyword">self</span><span class="variable">.bridge</span> = [WebViewJavascriptBridge bridgeForWebView:<span class="keyword">self</span><span class="variable">.htmlWebView</span> webViewDelegate:<span class="keyword">self</span> handler:^(<span class="keyword">id</span> data, WVJBResponseCallback responseCallback) &#123;</span><br><span class="line">    DLog(<span class="string">@"ObjC received message from JS: %@"</span>, data);</span><br><span class="line">    responseCallback(<span class="string">@"Response for message from ObjC"</span>);</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这一段是将从JS返回的图片数组到OC中下载并缓存起来</span></span><br><span class="line">[<span class="keyword">self</span><span class="variable">.bridge</span> registerHandler:<span class="string">@"ImageURLObjcCallback"</span> handler:^(<span class="keyword">id</span> data, WVJBResponseCallback responseCallback) &#123;</span><br><span class="line">    [<span class="keyword">self</span> downloadAllImagesInNative:data];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>JS端：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下是固定写法，你自己的JS文件中必须包含如下代码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">connectWebViewJavascriptBridge</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.WebViewJavascriptBridge) &#123;</span><br><span class="line">        callback(WebViewJavascriptBridge)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">document</span>.addEventListener(<span class="string">'WebViewJavascriptBridgeReady'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            callback(WebViewJavascriptBridge)</span><br><span class="line">        &#125;, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册相关的回调</span></span><br><span class="line">connectWebViewJavascriptBridge(<span class="function"><span class="keyword">function</span>(<span class="params">bridge</span>) </span>&#123;</span><br><span class="line">    bridge.init(<span class="function"><span class="keyword">function</span>(<span class="params">message, responseCallback</span>) </span>&#123;</span><br><span class="line">        log(<span class="string">'JS got a message'</span>, message)</span><br><span class="line">        <span class="keyword">var</span> data = &#123; <span class="string">'Javascript Responds'</span>:<span class="string">'Wee!'</span> &#125;</span><br><span class="line">        log(<span class="string">'JS responding with'</span>, data)</span><br><span class="line">        responseCallback(data)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查找可见区域内的图片URL</span></span><br><span class="line">    bridge.registerHandler(<span class="string">'findVisibleImageUrlHandler'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, responseCallback</span>) </span>&#123;</span><br><span class="line">        findVisibleImageUrl(data.contentOffsetY, data.offsetHeight);</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把URL换成cache的URL</span></span><br><span class="line">    bridge.registerHandler(<span class="string">'imagesDownloadCompleteHandler'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, responseCallback</span>) </span>&#123;</span><br><span class="line">        imagesDownloadComplete(data[<span class="number">0</span>], data[<span class="number">1</span>]);</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查找可见区域内的图片URL</span></span><br><span class="line">    bridge.registerHandler(<span class="string">'ScrollViewDidScrollHandler'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, responseCallback</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//alert("aaaa");</span></span><br><span class="line">        getScrollHeight(data.contentOffsetY);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)    </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment">// 这一段其实是网上常用的图片延迟加载方法</span></span><br><span class="line"><span class="comment">// 就算你不使用图片缓存，只是简单的把图片地址替换回去同样可以加快很多的速度</span></span><br><span class="line"><span class="keyword">var</span> v = &#123;</span><br><span class="line">        eleGroup: <span class="literal">null</span>, <span class="comment">// 图片数组</span></span><br><span class="line">        limitHeight: <span class="number">0</span>, <span class="comment">// 偏移量</span></span><br><span class="line">        imageUrlsArray: <span class="literal">null</span>, <span class="comment">// url数组</span></span><br><span class="line">        willCompleteImageArray: <span class="literal">null</span>, <span class="comment">// 可见高度也就是读取图片高度，如果你内容不会翻到好几页，大可以不需要。</span></span><br><span class="line">        isGetScrollHeight:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> *  获取所有img标签URL的数据</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAllImageURL</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取图片标签并转化为数组</span></span><br><span class="line">    v.eleGroup = <span class="built_in">document</span>.querySelectorAll(<span class="string">"img"</span>);</span><br><span class="line">    v.eleGroup = <span class="built_in">Array</span>.prototype.slice.call(v.eleGroup, <span class="number">0</span>);</span><br><span class="line">    v.replaceImageArray = </span><br><span class="line">    v.imageUrlsArray = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把URL塞到数组</span></span><br><span class="line">    v.eleGroup.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">image</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> esrc = image.getAttribute(<span class="string">"asrc"</span>);</span><br><span class="line">        v.imageUrlsArray.push(esrc);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> *  找出两倍屏幕大小的可见的图片的对象</span><br><span class="line"> *  由于我们内容往往很长，以用户滚动的距离去加载图片，这一步可以减轻服务器负担也可以为用户省流量。</span><br><span class="line"> *</span><br><span class="line"> *  @param float  scrollView.contentOffset.y</span><br><span class="line"> *  @param float  偏移高度 - 原生 + UIWebView</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findVisibleImageUrl</span>(<span class="params">contentOffsetY, offsetHeight</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    offsetHeight = <span class="built_in">Number</span>(offsetHeight);</span><br><span class="line">    contentOffsetY = <span class="built_in">Number</span>(contentOffsetY);</span><br><span class="line">    <span class="keyword">var</span> tempImageUrlsArray = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">    <span class="keyword">var</span> sedImageUrlsArray = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">    <span class="keyword">var</span> tempEleGroup = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滚动到UIWebView才开始查找图片位置</span></span><br><span class="line">    <span class="keyword">if</span> ( (v.limitHeight == <span class="number">0</span>) || (contentOffsetY &gt; v.limitHeight)) &#123;</span><br><span class="line">        v.limitHeight = <span class="built_in">Number</span>(v.limitHeight) + offsetHeight;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">            </span><br><span class="line">    <span class="comment">// 根据仿移量，定位图像是否在预设的可见区域，并且减去已经显示过的图片，减小循环次数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, j = v.eleGroup.length; i &lt; j; i++) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 判断位置并添加到数组，传回到OC</span></span><br><span class="line">        <span class="keyword">if</span> (v.eleGroup[i].offsetTop &lt;= v.limitHeight) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"contentOffsetY:"</span> + contentOffsetY + <span class="string">"  v.limitHeight:"</span> + v.limitHeight + <span class="string">"   v.eleGroup[i].offsetTop:"</span> + v.eleGroup[i].offsetTop);</span><br><span class="line">            sedImageUrlsArray.push(v.imageUrlsArray[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            tempImageUrlsArray.push(v.imageUrlsArray[i]);</span><br><span class="line">            tempEleGroup.push(v.eleGroup[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    v.imageUrlsArray = tempImageUrlsArray;</span><br><span class="line">    v.eleGroup = tempEleGroup;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把显示区域的图像数组返回去OC</span></span><br><span class="line">    bridgeImageURLCallback(sedImageUrlsArray);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> *  发送收到的URL到OC</span><br><span class="line"> *</span><br><span class="line"> *  @param str 图像的地址</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bridgeImageURLCallback</span>(<span class="params">imageURL</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    connectWebViewJavascriptBridge(<span class="function"><span class="keyword">function</span>(<span class="params">bridge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        bridge.callHandler(<span class="string">'ImageURLObjcCallback'</span>, imageURL, <span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">                <span class="comment">//log('JS got response', response)</span></span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> *  将图片的URL 换成 cache 的URL</span><br><span class="line"> *</span><br><span class="line"> *  @param dic          要修改的字典</span><br><span class="line"> *  </span><br><span class="line"> *  @return NSInter类型的时间戳</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">imagesDownloadComplete</span>(<span class="params">pOldUrl, pNewUrl</span>) </span>&#123;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取未替换的图片</span></span><br><span class="line">    <span class="keyword">var</span> tempImageUrlsArray = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">    <span class="keyword">if</span> (v.willCompleteImageArray == <span class="literal">null</span>) &#123;</span><br><span class="line">        v.willCompleteImageArray = <span class="built_in">document</span>.querySelectorAll(<span class="string">"img"</span>);</span><br><span class="line">        v.willCompleteImageArray = <span class="built_in">Array</span>.prototype.slice.call(v.willCompleteImageArray, <span class="number">0</span>);</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查找并替换图像(Base64String)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, j = v.willCompleteImageArray.length; i &lt; j; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v.willCompleteImageArray[i].getAttribute(<span class="string">"asrc"</span>) == pOldUrl || v.willCompleteImageArray[i].getAttribute(<span class="string">"asrc"</span>) == <span class="built_in">decodeURIComponent</span>(pOldUrl)) &#123;</span><br><span class="line">            v.willCompleteImageArray[i].src = pNewUrl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            tempImageUrlsArray.push(v.willCompleteImageArray[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    v.willCompleteImageArray = tempImageUrlsArray;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载完HTML，获取所有的图像</span></span><br><span class="line">getAllImageURL();</span><br></pre></td></tr></table></figure>
+<p>上面的<code>js</code>代码都有完整的注译，因为很多的写<code>oc</code>的未必能懂<code>js</code>。</p>
+<h3 id="3、OC与JS交互"><strong>3、OC与JS交互</strong></h3><p><code>UIWebView</code>加载完<code>HMTL</code>会调用 <code>webViewDidFinishLoad:</code> 告诉我们已经加载完毕。而此时所有的图片都是我们设置的默认图片，加载起来相当的快。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sent after a web view finishes loading a frame.</span></span><br><span class="line">- (<span class="keyword">void</span>)webViewDidFinishLoad:(<span class="built_in">UIWebView</span> *)webView &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// offsetHeight 如果设为1000，那么当contentOffsetY为1001的时候，offsetHeight为 2001</span></span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.bridge</span> callHandler:<span class="string">@"findVisibleImageUrlHandler"</span> data:@&#123; <span class="string">@"contentOffsetY"</span>:<span class="string">@"1"</span>, <span class="string">@"offsetHeight"</span>:<span class="string">@"1000"</span> &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于我禁用了<code>UIWebView</code>的滚动，所以必须要手动的传回给JS</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView &#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">NSString</span> *contentOffsetY = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%.f"</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span>];</span><br><span class="line">  [<span class="keyword">self</span><span class="variable">.bridge</span> callHandler:<span class="string">@"findVisibleImageUrlHandler"</span> data:@&#123; <span class="string">@"contentOffsetY"</span>:contentOffsetY, <span class="string">@"offsetHeight"</span>:<span class="string">@"1000"</span> &#125;];</span><br></pre></td></tr></table></figure>
+<p>当<code>bridgeImageURLCallback</code>这个JS被调后呢，会调用以下方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用OC把URL下载到本地</span></span><br><span class="line">-(<span class="keyword">void</span>)downloadAllImagesInNative:(<span class="built_in">NSString</span> *)imageURL &#123;</span><br><span class="line"></span><br><span class="line">    SDWebImageManager *manager = [SDWebImageManager sharedManager];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSString</span> *_url = imageURL;</span><br><span class="line"></span><br><span class="line">        [manager downloadImageWithURL:[<span class="built_in">NSURL</span> URLWithString:_url] options:SDWebImageHighPriority progress:<span class="literal">nil</span> completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">BOOL</span> finished, <span class="built_in">NSURL</span> *imageURL) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (image) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span><br><span class="line"></span><br><span class="line">                    <span class="built_in">NSString</span> *imgB64 = [<span class="built_in">UIImageJPEGRepresentation</span>(image, <span class="number">1.0</span>) base64EncodedStringWithOptions:<span class="built_in">NSDataBase64Encoding64CharacterLineLength</span>];</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 把图片在磁盘中的地址传回给JS</span></span><br><span class="line">                    <span class="built_in">NSString</span> *key = [manager cacheKeyForURL:imageURL];</span><br><span class="line">                    <span class="comment">//DLog(@"key:%@", key);</span></span><br><span class="line"></span><br><span class="line">                    <span class="built_in">NSString</span> *source = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"data:image/png;base64,%@"</span>, imgB64];</span><br><span class="line">                    [<span class="keyword">self</span><span class="variable">.bridge</span> callHandler:<span class="string">@"imagesDownloadCompleteHandler"</span> data:@[key,source]];</span><br><span class="line"></span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从<code>SDWebImageManager</code> 缓存的图片转成<code>imgB64</code>就能实现<code>UIWebView</code>缓存。不过同时也带来了一个问题，因为<code>imgB64</code>转成字符它还是那么大，如果一个页面的图片同时塞进<code>HTML</code>，那么这个<code>HTML</code>可能会有几十M，所以如何使用还是看情况。在不能改动版面的情况下，我现在并没有做<code>SDWebImageManager</code>缓存，仅仅是重新的替换<code>URL</code>，但也能加快加载的速度也在寻找解决的方案。</p>
+<h3 id="总结"><strong>总结</strong></h3><p>整个流程也相对简单<br>1、替换<code>HTML</code>所有的图片地址。<br>2、<code>JS</code>取出<code>HTML</code>所有的图片。<br>3、跟据滚动的<code>offsetY</code>判断需要加载的图片。<br>4、使用<code>OC</code>下载图片并缓存起来转成<code>imgB64</code>。<br>5、替换<code>HTML</code>的图片地址。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/11/03/PullRefreshAnimation/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">下拉刷新动画效果的实现</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="UIWebView+JS" data-title="UIWebView+JS图片缓存实现" data-url="http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 冲浪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
