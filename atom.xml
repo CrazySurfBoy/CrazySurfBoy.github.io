@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-01-11T06:46:37.000Z</updated>
+  <updated>2016-01-11T06:57:47.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -18,13 +18,13 @@
     <title><![CDATA[ReactiveCocoa - 登录交互效果的实现]]></title>
     <link href="http://www.crazysurfboy.com/2016/01/11/LoginWithReactiveCocoa/"/>
     <id>http://www.crazysurfboy.com/2016/01/11/LoginWithReactiveCocoa/</id>
-    <published>2016-01-11T06:46:37.000Z</published>
-    <updated>2016-01-11T06:46:37.000Z</updated>
+    <published>2016-01-11T06:57:47.000Z</published>
+    <updated>2016-01-11T06:57:47.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>Demo：用 <code>ReactiveCocoa</code> 做一个登录的交互效果，当用户输入邮箱或者密码不符时字体为红色并且登录按扭程灰色并不可点。相反的邮箱和密码都符合规定时字体为灰色并且登录按扭为深绿色并可点击。</p>
 </blockquote>
 <p>有点经验的都会觉得这种效果实现起来很简单但麻烦，常用的方法 <code>Delegate</code>、<code>target-action</code>、<code>KVC</code> 等组合使用，而且代码页面的粘合性也比很强。现在我们使用 <code>ReactiveCocoa</code> 来实现不但统一所有的消息，代码也更加的简洁直观，与页面的粘合性也不再这么强，相对在重用时会简单点。</p>
 <p>不过 <code>ReactiveCocoa</code> 并不是为了降低编程的难度存在的，而是解决一些问题。相反入门的门槛相对较高，对于习惯了 <code>OC</code>编程的人，思想的转换才是难点。本文并不是教程更像是指南性文章，让你了解 <code>ReactiveCocoa</code> 是一个怎样的东西。</p>
-<p>效果如下<a href="https://github.com/CrazySurfBoy/PullRefreshAnimation" target="_blank" rel="external">（完整的示例下载）</a>：</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/LoginWithReactiveCocoa" target="_blank" rel="external">（完整的示例下载）</a>：</p>
 <p><img src="/image/LoginWithReactiveCocoa.gif" alt="演示"> </p>
 <p>看一下它和我们一般使用的方法有什么不一样</p>
 <a id="more"></a>
@@ -45,7 +45,7 @@
 </blockquote>
 <p>有点经验的都会觉得这种效果实现起来很简单但麻烦，常用的方法 <code>Delegate</code>、<code>target-action</code>、<code>KVC</code> 等组合使用，而且代码页面的粘合性也比很强。现在我们使用 <code>ReactiveCocoa</code> 来实现不但统一所有的消息，代码也更加的简洁直观，与页面的粘合性也不再这么强，相对在重用时会简单点。</p>
 <p>不过 <code>ReactiveCocoa</code> 并不是为了降低编程的难度存在的，而是解决一些问题。相反入门的门槛相对较高，对于习惯了 <code>OC</code>编程的人，思想的转换才是难点。本文并不是教程更像是指南性文章，让你了解 <code>ReactiveCocoa</code> 是一个怎样的东西。</p>
-<p>效果如下<a href="https://github.com/CrazySurfBoy/PullRefreshAnimation">（完整的示例下载）</a>：</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/LoginWithReactiveCocoa">（完整的示例下载）</a>：</p>
 <p><img src="/image/LoginWithReactiveCocoa.gif" alt="演示"> </p>
 <p>看一下它和我们一般使用的方法有什么不一样</p>]]>
     
