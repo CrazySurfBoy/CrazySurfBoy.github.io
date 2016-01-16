@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-01-11T06:57:47.000Z</updated>
+  <updated>2016-01-16T15:05:48.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -15,11 +15,71 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜]]></title>
+    <link href="http://www.crazysurfboy.com/2016/01/15/GPUImageLookupTable/"/>
+    <id>http://www.crazysurfboy.com/2016/01/15/GPUImageLookupTable/</id>
+    <published>2016-01-14T16:00:00.000Z</published>
+    <updated>2016-01-16T15:05:48.000Z</updated>
+    <content type="html"><![CDATA[<blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
+</blockquote>
+<p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
+<p>方法找对了这事很重要！因为很多后续开发都与滤镜相关。</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/GPUImageLookupTable" target="_blank" rel="external">（完整的示例下载）</a>：</p>
+<p><img src="/image/GPUImageLookupTable.gif" alt="演示"> </p>
+<p>接下来的代码简单到你不相信，是的就是这么简单。</p>
+<a id="more"></a>
+<h3 id="1、Original_Lookup_Table"><strong>1、Original Lookup Table</strong></h3><p><img src="/image/OriginalLookupTable.png" alt="演示"><br><code>颜色查找表</code> 是将现有的颜色进行一次（矩阵）转换，而很多的滤镜功能就是提供了这么一个转换的矩阵，在原始色彩的基础上进行颜色的转换。</p>
+<h3 id="2、使用_PhotoShop_对_Original_Lookup_Table_进行颜色的改变"><strong>2、使用 <code>PhotoShop</code> 对 <code>Original Lookup Table</code> 进行颜色的改变</strong></h3><p>很多码农对 <code>PhotoShop</code> 很陌生(我玩摄影懂一点)不过没关系，因为做法简单，直接告诉设计师都能懂。</p>
+<ul>
+<li><p><strong>1、从 <code>PhotoShop</code> 中打开一张想要调整色调的图（一般为比较中性的原图）。</strong></p>
+</li>
+<li><p><strong>2、打开 <code>PhotoShop</code> 动作面板，开始记下你的操作。</strong></p>
+</li>
+<li><p><strong>3、对原图进行色调的调整（这种方法只会对颜色起效）。</strong></p>
+</li>
+<li><p><strong>4、调整完后保存动作，并在动作面板删掉一些不是调整色调的其它操作。</strong></p>
+</li>
+<li><p><strong>5、打开 <code>Original Lookup Table</code> 的原图，并从动作面板中执行刚刚保存的动作</strong></p>
+</li>
+<li><p><strong>6、导出图片</strong></p>
+</li>
+</ul>
+<p>为了更清楚的演示调色后的图，我特意调成了黑白。就是开头看到演示的 <code>GIF</code> 的效果。</p>
+<p>(调整前)<br><img src="/image/OriginalLookupTable.png" alt="演示"> </p>
+<p>(调整后)<br><img src="/image/BlackWhiteLookupTable.png" alt="演示"> </p>
+<p>-</p>
+<h3 id="3、在代码中使用_Lookup_Table_对图像执行滤镜效果"><strong>3、在代码中使用 Lookup Table 对图像执行滤镜效果</strong></h3><p>非常有名的第三方图像处理库 GPUImage 想必你一定听说过，如何安装使用网上文章有很多这里就不详说了。</p>
+<p>– <strong>配置滤镜信息</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 滤镜</span></span><br><span class="line">- (<span class="keyword">void</span>)initFilterView &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 配置信息</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.filterList</span> = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滤镜数据</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *filterData1 = @&#123;<span class="string">@"lookupImage"</span>:<span class="string">@"OriginalLookupTable.png"</span>, <span class="string">@"title"</span>:<span class="string">@"原图"</span>&#125;;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterList</span> addObject:filterData1];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSDictionary</span> *filterData2 = @&#123;<span class="string">@"lookupImage"</span>:<span class="string">@"LookupTable1.png"</span>, <span class="string">@"title"</span>:<span class="string">@"怀旧"</span>&#125;;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterList</span> addObject:filterData2];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSDictionary</span> *filterData3 = @&#123;<span class="string">@"lookupImage"</span>:<span class="string">@"LookupTable2.png"</span>, <span class="string">@"title"</span>:<span class="string">@"黑白"</span>&#125;;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterList</span> addObject:filterData3];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滤镜区域</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.filterView</span> = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0.0</span>f, SCREEN_HEIGHT - <span class="number">64</span> - <span class="number">100</span>, SCREEN_WDITH, <span class="number">100</span> )];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterView</span> setBackgroundColor:[<span class="built_in">UIColor</span> colorFromHexCode:<span class="string">@"3a424d"</span>]];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.filterView</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建选择滑动的滤镜</span></span><br><span class="line">    [<span class="keyword">self</span> crateFilters];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把滤镜写成以配置方式是考虑到以后很有可能从网上下载滤镜，然后会以本地数据库 <code>Sqlite</code> 形式保存相关参数。</p>
+<p> – <strong>创建滤镜</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建滤镜</span></span><br><span class="line">- (<span class="keyword">void</span>)crateFilters &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 总数</span></span><br><span class="line">    NSInteger filterTotal = [self.filterList count];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 预览的效果图 - 一般做法是需要压缩成当前图像的大小，例如 60 *60 例子我是直接使用的。</span></span><br><span class="line">    UIImage *smallImage = self.originalImage;</span><br><span class="line"></span><br><span class="line">    NSInteger i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt; filterTotal; i++) &#123;</span><br><span class="line"></span><br><span class="line">        NSMutableDictionary *tempFilterData = self.filterList[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Box</span></span><br><span class="line">        UIView *filterBoxView = [[UIView alloc] initWithFrame:CGRectMake(i*<span class="number">70</span>, <span class="number">10.0</span>, <span class="number">70.0</span>f, <span class="number">80.0</span>f)];</span><br><span class="line">        [self.filterView addSubview:filterBoxView];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 预览的图像</span></span><br><span class="line">        UIImage *filteredImage = [self filterImage:smallImage withLUTNamed:tempFilterData[@<span class="string">"lookupImage"</span>]];</span><br><span class="line">        UIImageView *tempFilterImageView = [[UIImageView alloc] initWithFrame:CGRectMake(<span class="number">10.0</span>f, <span class="number">0.0</span>f, <span class="number">60.0</span>f, <span class="number">60.0</span>f)];</span><br><span class="line">        tempFilterImageView.image = filteredImage;</span><br><span class="line">        [filterBoxView addSubview:tempFilterImageView];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 文字</span></span><br><span class="line">        UILabel *filterLabel = [[UILabel alloc] initWithFrame:CGRectMake(<span class="number">10.0</span>, <span class="number">60.0</span>, <span class="number">60.0</span>, <span class="number">20.0</span>)];</span><br><span class="line">        filterLabel.text = tempFilterData[@<span class="string">"title"</span>];</span><br><span class="line">        filterLabel.backgroundColor = [UIColor colorWithRed:<span class="number">66</span>/<span class="number">255.0</span> green:<span class="number">212</span>/<span class="number">255.0</span> blue:<span class="number">153</span>/<span class="number">255.0</span> alpha:<span class="number">0.75</span>];</span><br><span class="line">        filterLabel.font = [UIFont systemFontOfSize:<span class="number">11</span>];</span><br><span class="line">        filterLabel.textAlignment = NSTextAlignmentCenter;</span><br><span class="line">        filterLabel.textColor = [UIColor whiteColor];</span><br><span class="line">        [filterBoxView addSubview:filterLabel];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 操作</span></span><br><span class="line">        UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">        actionButton.frame  = CGRectMake(<span class="number">10</span>, <span class="number">0.0</span>f, <span class="number">60.0</span>f, <span class="number">80.0</span>f);</span><br><span class="line">        [[actionButton layer] setBorderColor:[[UIColor colorFromHexCode:@<span class="string">"057fed"</span>] CGColor]];</span><br><span class="line">        actionButton.tag = i + <span class="number">20</span>;</span><br><span class="line">        [actionButton addTarget:self action:@selector(filterButtonClick:) forControlEvents:UIControlEventTouchUpInside |UIControlEventTouchDragOutside];</span><br><span class="line">        [filterBoxView addSubview:actionButton];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认选中原图</span></span><br><span class="line">    UIButton *originalButton = [self.view viewWithTag:<span class="number">20</span>];</span><br><span class="line">    [self filterButtonClick:originalButton];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面是生成滤镜预览图，也许你会问这样子会不会很慢？例如生成10多个的。在强大的 <code>iPhone</code> 性能面前事实上并不会，遇到卡况且也有很多种方法去忧化。</p>
+<p>– <strong>生成滤镜效果</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 图片进行滤镜添加操作</span></span><br><span class="line">- (UIImage *)filterImage:(UIImage *)originalImage withLUTNamed:(NSString *)lutName &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立原图与</span></span><br><span class="line">    GPUImagePicture *originalImageSource = [[GPUImagePicture alloc] initWithImage:originalImage];</span><br><span class="line">    GPUImagePicture *lookupImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:lutName]];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用这个滤镜类就可以直接对图片进行滤镜添加操作</span></span><br><span class="line">    GPUImageLookupFilter *lookupFilter = [[GPUImageLookupFilter alloc] init];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 进行滤镜处理</span></span><br><span class="line">    [originalImageSource addTarget:lookupFilter];</span><br><span class="line">    [originalImageSource processImage];</span><br><span class="line"></span><br><span class="line">    [lookupImageSource addTarget:lookupFilter];</span><br><span class="line">    [lookupImageSource processImage];</span><br><span class="line"></span><br><span class="line">    [lookupFilter useNextFrameForImageCapture];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [lookupFilter imageFromCurrentFramebufferWithOrientation:UIImageOrientationUp];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码就是最核心方法了是不是很简单，比起我当初完全没有想象的中的简单多了。</p>
+<h3 id="总结"><strong>总结</strong></h3><p><code>GPUImage</code> 的确是一个伟大的第三方图像处理库，极大简化了我们的工作。 <code>filterImage:</code> 方法看似很简单也花掉了很长的时间去学习研究，各种的折腾希望帮到你。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
+</blockquote>
+<p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
+<p>方法找对了这事很重要！因为很多后续开发都与滤镜相关。</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/GPUImageLookupTable">（完整的示例下载）</a>：</p>
+<p><img src="/image/GPUImageLookupTable.gif" alt="演示"> </p>
+<p>接下来的代码简单到你不相信，是的就是这么简单。</p>]]>
+    
+    </summary>
+    
+      <category term="Filter" scheme="http://www.crazysurfboy.com/tags/Filter/"/>
+    
+      <category term="GPUImage" scheme="http://www.crazysurfboy.com/tags/GPUImage/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[ReactiveCocoa - 登录交互效果的实现]]></title>
-    <link href="http://www.crazysurfboy.com/2016/01/11/LoginWithReactiveCocoa/"/>
-    <id>http://www.crazysurfboy.com/2016/01/11/LoginWithReactiveCocoa/</id>
-    <published>2016-01-11T06:57:47.000Z</published>
-    <updated>2016-01-11T06:57:47.000Z</updated>
+    <link href="http://www.crazysurfboy.com/2016/01/13/LoginWithReactiveCocoa/"/>
+    <id>http://www.crazysurfboy.com/2016/01/13/LoginWithReactiveCocoa/</id>
+    <published>2016-01-12T16:00:00.000Z</published>
+    <updated>2016-01-15T02:36:47.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>Demo：用 <code>ReactiveCocoa</code> 做一个登录的交互效果，当用户输入邮箱或者密码不符时字体为红色并且登录按扭程灰色并不可点。相反的邮箱和密码都符合规定时字体为灰色并且登录按扭为深绿色并可点击。</p>
 </blockquote>
 <p>有点经验的都会觉得这种效果实现起来很简单但麻烦，常用的方法 <code>Delegate</code>、<code>target-action</code>、<code>KVC</code> 等组合使用，而且代码页面的粘合性也比很强。现在我们使用 <code>ReactiveCocoa</code> 来实现不但统一所有的消息，代码也更加的简洁直观，与页面的粘合性也不再这么强，相对在重用时会简单点。</p>
@@ -51,14 +111,16 @@
     
     </summary>
     
+      <category term="ReactiveCocoa" scheme="http://www.crazysurfboy.com/tags/ReactiveCocoa/"/>
+    
   </entry>
   
   <entry>
     <title><![CDATA[UIWebView+JS图片缓存实现]]></title>
     <link href="http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/"/>
     <id>http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/</id>
-    <published>2015-11-16T08:55:12.000Z</published>
-    <updated>2015-11-16T08:55:12.000Z</updated>
+    <published>2015-11-15T16:00:00.000Z</published>
+    <updated>2016-01-15T02:37:27.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。</p>
 </blockquote>
 <p>这个页主要使用 <code>UIWebView + HTML</code> 展示数据，另外部分 <code>View</code> 和  <code>UIWebView</code> 添加到 <code>UIScrollView</code>,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：<code>MGTemplateEngine</code> 配置多种模板展示？由于运营的需求是每条线路样式和内容都会不一样无法归类成N个模板，再加上我们需要在多个平台中使用同(So…你懂的)，只能尽最大的程度去忧化。</p>
@@ -91,14 +153,22 @@
     
     </summary>
     
+      <category term="JavaScript" scheme="http://www.crazysurfboy.com/tags/JavaScript/"/>
+    
+      <category term="UIScrollView" scheme="http://www.crazysurfboy.com/tags/UIScrollView/"/>
+    
+      <category term="UIWebView" scheme="http://www.crazysurfboy.com/tags/UIWebView/"/>
+    
+      <category term="WebViewJavascriptBridge" scheme="http://www.crazysurfboy.com/tags/WebViewJavascriptBridge/"/>
+    
   </entry>
   
   <entry>
     <title><![CDATA[下拉刷新动画效果的实现]]></title>
     <link href="http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/"/>
     <id>http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/</id>
-    <published>2015-11-03T09:57:01.000Z</published>
-    <updated>2015-11-03T09:57:01.000Z</updated>
+    <published>2015-11-02T16:00:00.000Z</published>
+    <updated>2016-01-15T02:38:14.000Z</updated>
     <content type="html"><![CDATA[<p>我们修改流行的下拉刷新库 <a href="https://github.com/enormego/EGOTableViewPullRefresh" target="_blank" rel="external">EGOTableViewPullRefresh</a> 来完成目前多数APP都具备的下拉刷新动画，下面说说它实现的基本原理。</p>
 <p><strong>通过代理方法 <code>- (void)scrollViewDidScroll:</code> 获得当前 <code>scrollView.contentOffset.y</code> 的值，通过这个值的变化作各种的动画效果，例如演示图中的慢慢填充的效果。<br>当用户放开手后<code>- (void)scrollViewDidEndDragging:</code> 触发，当判定<code>y</code>值达到某一个负数时，就可以判定是下拉刷新操作，否而当作放弃操作。然后通过 <code>UIEdgeInsetMake</code> 设置 <code>scroll.contnetInset</code>，就可以显示刷新时间、加载等信息。当我们完成请求后调用方法重新设置 <code>scroll.contentInset</code> 的 <code>UIEdgeInsertMake top 0</code> 并设置过渡动画效果;</strong></p>
 <p>效果如下<a href="https://github.com/CrazySurfBoy/PullRefreshAnimation" target="_blank" rel="external">（完整的示例下载）</a>：</p>
@@ -131,14 +201,18 @@
     
     </summary>
     
+      <category term="CALayer" scheme="http://www.crazysurfboy.com/tags/CALayer/"/>
+    
+      <category term="UITableView" scheme="http://www.crazysurfboy.com/tags/UITableView/"/>
+    
   </entry>
   
   <entry>
     <title><![CDATA[一个简单的过渡动画]]></title>
     <link href="http://www.crazysurfboy.com/2015/10/13/SplashView/"/>
     <id>http://www.crazysurfboy.com/2015/10/13/SplashView/</id>
-    <published>2015-10-13T06:32:22.000Z</published>
-    <updated>2015-10-13T06:32:22.000Z</updated>
+    <published>2015-10-12T16:00:00.000Z</published>
+    <updated>2016-01-15T02:38:44.000Z</updated>
     <content type="html"><![CDATA[<p>这个动画效果相当的简单没什么难点，但效果还算是不错的。索性就贴出来给有需要的朋友。</p>
 <p><img src="/image/splashView.gif" alt="演示"> </p>
 <p>下面我要看看代码是如何实现的</p>
@@ -152,14 +226,16 @@
     
     </summary>
     
+      <category term="Animation" scheme="http://www.crazysurfboy.com/tags/Animation/"/>
+    
   </entry>
   
   <entry>
     <title><![CDATA[自定义 View Controller 转场动画(1)]]></title>
     <link href="http://www.crazysurfboy.com/2015/10/12/viewControllerTransitioning/"/>
     <id>http://www.crazysurfboy.com/2015/10/12/viewControllerTransitioning/</id>
-    <published>2015-10-12T03:16:05.000Z</published>
-    <updated>2015-10-12T03:16:05.000Z</updated>
+    <published>2015-10-11T16:00:00.000Z</published>
+    <updated>2016-01-15T02:39:07.000Z</updated>
     <content type="html"><![CDATA[<p>本文探讨了改变 <code>UINavigationController</code> 两个 <code>view controller</code> 之间的转场动画，但是这些做法在其它自己定义的 <code>view controller</code> 容器也是通用的，后续的文章也会有探讨。</p>
 <p>看一下我们要实现的效果如下<a href="https://github.com/CrazySurfBoy/ViewControllerTransition_1" target="_blank" rel="external">（示例下载）</a>：</p>
 <p><img src="/image/transition1.gif" alt="演示"> </p>
@@ -197,6 +273,12 @@
 <p>下面我要看看代码是如何实现的 ( UI是用代码创建的，你很方便的能修改 )。</p>]]>
     
     </summary>
+    
+      <category term="Animation" scheme="http://www.crazysurfboy.com/tags/Animation/"/>
+    
+      <category term="Transitioning" scheme="http://www.crazysurfboy.com/tags/Transitioning/"/>
+    
+      <category term="UINavigationController" scheme="http://www.crazysurfboy.com/tags/UINavigationController/"/>
     
   </entry>
   
