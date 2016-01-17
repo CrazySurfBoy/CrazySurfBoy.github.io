@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-01-16T15:05:48.000Z</updated>
+  <updated>2016-01-17T10:38:22.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.crazysurfboy.com/2016/01/15/GPUImageLookupTable/"/>
     <id>http://www.crazysurfboy.com/2016/01/15/GPUImageLookupTable/</id>
     <published>2016-01-14T16:00:00.000Z</published>
-    <updated>2016-01-16T15:05:48.000Z</updated>
+    <updated>2016-01-17T10:38:22.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
 </blockquote>
 <p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
@@ -55,6 +55,8 @@
 <p>上面是生成滤镜预览图，也许你会问这样子会不会很慢？例如生成10多个的。在强大的 <code>iPhone</code> 性能面前事实上并不会，遇到卡况且也有很多种方法去忧化。</p>
 <p>– <strong>生成滤镜效果</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 图片进行滤镜添加操作</span></span><br><span class="line">- (UIImage *)filterImage:(UIImage *)originalImage withLUTNamed:(NSString *)lutName &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立原图与</span></span><br><span class="line">    GPUImagePicture *originalImageSource = [[GPUImagePicture alloc] initWithImage:originalImage];</span><br><span class="line">    GPUImagePicture *lookupImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:lutName]];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用这个滤镜类就可以直接对图片进行滤镜添加操作</span></span><br><span class="line">    GPUImageLookupFilter *lookupFilter = [[GPUImageLookupFilter alloc] init];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 进行滤镜处理</span></span><br><span class="line">    [originalImageSource addTarget:lookupFilter];</span><br><span class="line">    [originalImageSource processImage];</span><br><span class="line"></span><br><span class="line">    [lookupImageSource addTarget:lookupFilter];</span><br><span class="line">    [lookupImageSource processImage];</span><br><span class="line"></span><br><span class="line">    [lookupFilter useNextFrameForImageCapture];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [lookupFilter imageFromCurrentFramebufferWithOrientation:UIImageOrientationUp];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上面的代码就是最核心方法了是不是很简单，比起我当初完全没有想象的中的简单多了。</p>
+<h3 id="4、给滤镜的源图像进行加密"><strong>4、给滤镜的源图像进行加密</strong></h3><p>你肯定会想辛辛苦苦的设计师调完的滤镜，别人只有导出APP的包就可以看到资源文件那不就白干了吗？</p>
+<p>其实我们可以将图像转成 <code>NSData</code>，然后再某个位置加上 <code>token</code> 进行拼接然后保存为文件。读取的时候进行解密就好，性能上麻肯定会有所影响不过我认为影响很微。如果你的滤镜好到别人要逆向工程破解，你早就换一种更有效的方法了。</p>
 <h3 id="总结"><strong>总结</strong></h3><p><code>GPUImage</code> 的确是一个伟大的第三方图像处理库，极大简化了我们的工作。 <code>filterImage:</code> 方法看似很简单也花掉了很长的时间去学习研究，各种的折腾希望帮到你。</p>
 ]]></content>
     <summary type="html">
