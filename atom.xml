@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-01-17T10:38:22.000Z</updated>
+  <updated>2016-01-17T10:38:25.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.crazysurfboy.com/2016/01/15/GPUImageLookupTable/"/>
     <id>http://www.crazysurfboy.com/2016/01/15/GPUImageLookupTable/</id>
     <published>2016-01-14T16:00:00.000Z</published>
-    <updated>2016-01-17T10:38:22.000Z</updated>
+    <updated>2016-01-17T10:38:25.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
 </blockquote>
 <p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
