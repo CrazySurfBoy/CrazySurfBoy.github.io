@@ -97,7 +97,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
 					</div>
 				</section>
 				
@@ -150,6 +150,94 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Rejected" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/31/Rejected/" class="article-date">
+  	<time datetime="2016-01-30T16:00:00.000Z" itemprop="datePublished">2016-01-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/31/Rejected/">App Store - Why Reject Me</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p><code>App</code> 审核，苹果虐我千百遍我对它如初恋，相信这是很多 <code>iOS</code> 从业的人生感悟。</p>
+</blockquote>
+<p>如果你是一枚 iOS 开发者，相信你会遇到过在应用提交审核一周后，在万分期待时然后在半夜收到 App 被拒的消息。相信这种感觉你肯定不好受，安卓的开发者你们是不会懂的！</p>
+<p>然而这些被拒的原因多种多样，下面我列举我数个 APP 提交时被到被拒绝的原恩。</p>
+<h3 id="悲惨的经历"><strong>悲惨的经历</strong></h3><ul>
+<li><p><strong>1、你的APP你包含了 <code>Beta</code> 字样，我们不接受任何测试版的 <code>App</code> 在 <code>AppStore</code> 中发布</strong></p>
+</li>
+<li><p><strong>2、你的 <code>App</code> 包含了音乐下载(其实是一个电台节目，只是开头有一首歌播放) 请提供 <code>XXXXX</code> 。最后的方法只能审核的时候去掉，具体你懂的</strong></p>
+</li>
+<li><p><strong>3、你的关于我们的版本号与 <code>AppStore</code> 不一至，测试时都没注意到</strong></p>
+</li>
+<li><p><strong>4、你的屏蔽截图与你的功能不一至（其实是截图图忘记了换新的，包括着下载的按扭的图）</strong></p>
+</li>
+<li><p><strong>5、你的 <code>APP</code> 显示网络错误、显示不正常。一查。。。虽然架设了海外服但忘记了测试，因为只有在美国审核才走国外服务器。</strong></p>
+</li>
+<li><p><strong>6、让用户生成的内容没有举报机制。这类的 <code>APP</code> 大家都没有经验，学习了</strong></p>
+</li>
+<li><p><strong>7、微信第三方登录不能要求用户安装才能使用(微博和QQ都有网页授权)，最后作检测了有安装才显示。</strong></p>
+</li>
+<li><p><strong>8、下载的内容放到 <code>Document</code> 文件夹并被 <code>iCloud</code> 同步备份了，苹果认为这是不应该被备份的。最后通过，不让 <code>iCloud</code> 备份</strong></p>
+</li>
+<li><p><strong>9、<code>APP</code> 勾选了广告标识但审核时发现没有广告，其实是它那边审核时没显示截个有广告的图给它，一天后过审核。</strong></p>
+</li>
+<li><p><strong>10、忘记提供测试账号。(如果你的 <code>APP</code> 有登录功能)</strong></p>
+</li>
+</ul>
+<h3 id="总结"><strong>总结</strong></h3><p>苹果的 <code>App</code> 审核要小心谨慎，因为不同的审核人员不同的 <code>App</code> 类型审核的标准都不一样。在上传 <code>App</code> 的时候开发人员一定要重新检查一次，用你的经验让 <code>App</code>上传的成功率提高。</p>
+<p>好多时候产品、总监、设计等参与的人都没有你熟悉苹果的审核标准，这并不是阅读了审核指南就成事 <code>OK</code>。这也在另一方面为什么新公司在做苹果的 <code>App</code>审核好多次都过不去原因，苹果并不是一次过把所有的问题都帮你列出来而是遇到问题就不会再往下查找了。</p>
+<p>最近新上传的 <code>App</code> 也是交足了学习经验。</p>
+<p>第一次是因为苹果审核的人使用的是海外服而我们测试在国内服务器，数据不正常 <code>So...</code></p>
+<p>第二次是因为用户生成的内容需要有举报功能，这个是我们没有想到的同时也是学习了。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Reject/">Reject</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/31/Rejected/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-LoginWithReactiveCocoa" class="article article-type-post" itemscope itemprop="blogPost">
   
