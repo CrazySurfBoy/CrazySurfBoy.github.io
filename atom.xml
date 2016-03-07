@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-03-07T07:05:56.000Z</updated>
+  <updated>2016-03-07T07:10:27.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -16,10 +16,10 @@
   
   <entry>
     <title><![CDATA[FMDB SQLite 插入 Data 类型的问题]]></title>
-    <link href="http://www.crazysurfboy.com/2016/02/02/SQLiteInsertData/"/>
-    <id>http://www.crazysurfboy.com/2016/02/02/SQLiteInsertData/</id>
-    <published>2016-02-01T16:00:00.000Z</published>
-    <updated>2016-03-07T07:05:56.000Z</updated>
+    <link href="http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/"/>
+    <id>http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/</id>
+    <published>2016-03-06T16:00:00.000Z</published>
+    <updated>2016-03-07T07:10:27.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p><code>FMDB</code> 是轻量级的框架，对 <code>SQLite API</code> 进行了友好的封装，使用起来相当的灵活。同时也非常符合从 <code>Web</code> 开发转移动端开发的人员对数据库的使用，相信你会喜欢它的。</p>
 </blockquote>
 <p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 PList 保存到 SQLite 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 SQLite 造成压力，于是也把下载好的模板图片和配置参数一同写入到 SQLite。那样我就不用写文件管理只需要简单的一条删除 SQL 就完成了，简单粗爆。</p>
