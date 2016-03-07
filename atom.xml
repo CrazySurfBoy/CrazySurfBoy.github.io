@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-03-07T07:10:27.000Z</updated>
+  <updated>2016-03-07T07:31:58.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -19,10 +19,10 @@
     <link href="http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/"/>
     <id>http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/</id>
     <published>2016-03-06T16:00:00.000Z</published>
-    <updated>2016-03-07T07:10:27.000Z</updated>
+    <updated>2016-03-07T07:31:58.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p><code>FMDB</code> 是轻量级的框架，对 <code>SQLite API</code> 进行了友好的封装，使用起来相当的灵活。同时也非常符合从 <code>Web</code> 开发转移动端开发的人员对数据库的使用，相信你会喜欢它的。</p>
 </blockquote>
-<p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 PList 保存到 SQLite 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 SQLite 造成压力，于是也把下载好的模板图片和配置参数一同写入到 SQLite。那样我就不用写文件管理只需要简单的一条删除 SQL 就完成了，简单粗爆。</p>
+<p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 <code>PList</code> 保存到 <code>SQLite</code> 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 <code>SQLite</code> 造成压力，于是也把下载好的模板图片和配置参数一同写入到 <code>SQLite</code>。那样我就不用写文件管理只需要简单的一条删除 <code>SQL</code> 就完成了，简单粗爆。</p>
 <h3 id="1、数据类型"><strong>1、数据类型</strong></h3><p>构想是把 <code>NSDictionary</code> 和  <code>UIImage</code> 转成 <code>NSData</code> 数据，找到了 <code>SQLite</code> 相对应的类型为 <code>BLOB</code>，写入进去读出来再转成相应的对象就大功告成了。</p>
 <p><strong>写入</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">downloadData[<span class="string">@"imageData"</span>] = <span class="built_in">UIImagePNGRepresentation</span>(image);</span><br><span class="line">downloadData[<span class="string">@"paramData"</span>] = [<span class="built_in">NSKeyedArchiver</span> archivedDataWithRootObject:downloadData[<span class="string">@"param"</span>]];</span><br></pre></td></tr></table></figure></p>
 <p><strong>取出：</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span> *paramData = [<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithData:tData[<span class="string">@"paramData"</span>]];</span><br><span class="line"><span class="built_in">UIImage</span> *templateImage = [<span class="built_in">UIImage</span> imageWithData:tData[<span class="string">@"imageData"</span>]];</span><br></pre></td></tr></table></figure></p>
@@ -41,7 +41,7 @@
     <summary type="html">
     <![CDATA[<blockquote><p><code>FMDB</code> 是轻量级的框架，对 <code>SQLite API</code> 进行了友好的封装，使用起来相当的灵活。同时也非常符合从 <code>Web</code> 开发转移动端开发的人员对数据库的使用，相信你会喜欢它的。</p>
 </blockquote>
-<p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 PList 保存到 SQLite 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 SQLite 造成压力，于是也把下载好的模板图片和配置参数一同写入到 SQLite。那样我就不用写文件管理只需要简单的一条删除 SQL 就完成了，简单粗爆。</p>
+<p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 <code>PList</code> 保存到 <code>SQLite</code> 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 <code>SQLite</code> 造成压力，于是也把下载好的模板图片和配置参数一同写入到 <code>SQLite</code>。那样我就不用写文件管理只需要简单的一条删除 <code>SQL</code> 就完成了，简单粗爆。</p>
 <h3 id="1、数据类型"><strong>1、数据类型</strong></h3><p>构想是把 <code>NSDictionary</code> 和  <code>UIImage</code> 转成 <code>NSData</code> 数据，找到了 <code>SQLite</code> 相对应的类型为 <code>BLOB</code>，写入进去读出来再转成相应的对象就大功告成了。</p>
 <p><strong>写入</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">downloadData[<span class="string">@"imageData"</span>] = <span class="built_in">UIImagePNGRepresentation</span>(image);</span><br><span class="line">downloadData[<span class="string">@"paramData"</span>] = [<span class="built_in">NSKeyedArchiver</span> archivedDataWithRootObject:downloadData[<span class="string">@"param"</span>]];</span><br></pre></td></tr></table></figure></p>
 <p><strong>取出：</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span> *paramData = [<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithData:tData[<span class="string">@"paramData"</span>]];</span><br><span class="line"><span class="built_in">UIImage</span> *templateImage = [<span class="built_in">UIImage</span> imageWithData:tData[<span class="string">@"imageData"</span>]];</span><br></pre></td></tr></table></figure></p>
