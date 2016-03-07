@@ -97,7 +97,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
 					</div>
 				</section>
 				
@@ -150,6 +150,71 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-SQLiteInsertData" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/02/SQLiteInsertData/" class="article-date">
+  	<time datetime="2016-02-01T16:00:00.000Z" itemprop="datePublished">2016-02-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/02/SQLiteInsertData/">FMDB SQLite 插入 Data 类型的问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p><code>FMDB</code> 是轻量级的框架，对 <code>SQLite API</code> 进行了友好的封装，使用起来相当的灵活。同时也非常符合从 <code>Web</code> 开发转移动端开发的人员对数据库的使用，相信你会喜欢它的。</p>
+</blockquote>
+<p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 PList 保存到 SQLite 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 SQLite 造成压力，于是也把下载好的模板图片和配置参数一同写入到 SQLite。那样我就不用写文件管理只需要简单的一条删除 SQL 就完成了，简单粗爆。</p>
+<h3 id="1、数据类型"><strong>1、数据类型</strong></h3><p>构想是把 <code>NSDictionary</code> 和  <code>UIImage</code> 转成 <code>NSData</code> 数据，找到了 <code>SQLite</code> 相对应的类型为 <code>BLOB</code>，写入进去读出来再转成相应的对象就大功告成了。</p>
+<p><strong>写入</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">downloadData[<span class="string">@"imageData"</span>] = <span class="built_in">UIImagePNGRepresentation</span>(image);</span><br><span class="line">downloadData[<span class="string">@"paramData"</span>] = [<span class="built_in">NSKeyedArchiver</span> archivedDataWithRootObject:downloadData[<span class="string">@"param"</span>]];</span><br></pre></td></tr></table></figure></p>
+<p><strong>取出：</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span> *paramData = [<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithData:tData[<span class="string">@"paramData"</span>]];</span><br><span class="line"><span class="built_in">UIImage</span> *templateImage = [<span class="built_in">UIImage</span> imageWithData:tData[<span class="string">@"imageData"</span>]];</span><br></pre></td></tr></table></figure></p>
+<p>NSLog 出来的语句是这样的</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I<span class="built_in">NSERT</span> INTO template (imageData, ,paramData) VALUES (&lt;<span class="number">89504e47</span>....&gt;,&lt;<span class="number">62706</span>c69 ....&gt;)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FMDB/">FMDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQLite/">SQLite</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/02/02/SQLiteInsertData/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-Rejected" class="article article-type-post" itemscope itemprop="blogPost">
   

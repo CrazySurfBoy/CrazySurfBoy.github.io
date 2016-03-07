@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.crazysurfboy.com/2016/02/02/SQLiteInsertData/</loc>
+    <lastmod>2016-03-07T07:05:56.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.crazysurfboy.com/2016/01/31/Rejected/</loc>
-    <lastmod>2016-01-31T03:55:59.000Z</lastmod>
+    <lastmod>2016-01-31T03:56:02.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/</loc>
+    <lastmod>2016-01-30T11:37:12.000Z</lastmod>
   </url>
   
   <url>
@@ -19,11 +29,6 @@
   <url>
     <loc>http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/</loc>
     <lastmod>2016-01-15T02:38:14.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/</loc>
-    <lastmod>2016-01-15T02:37:27.000Z</lastmod>
   </url>
   
   <url>
