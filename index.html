@@ -97,7 +97,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
 					</div>
 				</section>
 				
@@ -150,6 +150,70 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-GPUImageLookupTable" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/11/GPUImageLookupTable/" class="article-date">
+  	<time datetime="2016-04-10T16:00:00.000Z" itemprop="datePublished">2016-04-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/11/GPUImageLookupTable/">GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
+</blockquote>
+<p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
+<p>方法找对了这事很重要！因为很多后续开发都与滤镜相关。</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/GPUImageLookupTable">（完整的示例下载）</a>：</p>
+<p><img src="/image/GPUImageLookupTable.gif" alt="演示"> </p>
+<p>接下来的代码简单到你不相信，是的就是这么简单。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Filter/">Filter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GPUImage/">GPUImage</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/11/GPUImageLookupTable/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-SQLiteInsertData" class="article article-type-post" itemscope itemprop="blogPost">
   

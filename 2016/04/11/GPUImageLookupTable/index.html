@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="google-site-verification" content="7-oZ04_m5xjOBBmwvJyX5WKRmy6y4yONCpz05Ym78ok" />
+  
+  <title>GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜 | 疯狂的冲浪者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="滤镜使用 颜色查找表(Color Lookup Table) 方法，对原图的颜色进行改变。就像 PhotoShop中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。
+
+近期公司的新 App 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 颜色查找表(Color Lookup Table) 方法是最合适不过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜">
+<meta property="og:url" content="http://www.crazysurfboy.com/2016/04/11/GPUImageLookupTable/index.html">
+<meta property="og:site_name" content="疯狂的冲浪者">
+<meta property="og:description" content="滤镜使用 颜色查找表(Color Lookup Table) 方法，对原图的颜色进行改变。就像 PhotoShop中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。
+
+近期公司的新 App 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 颜色查找表(Color Lookup Table) 方法是最合适不过">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/GPUImageLookupTable.gif">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/OriginalLookupTable.png">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/OriginalLookupTable.png">
+<meta property="og:image" content="http://www.crazysurfboy.com/image/BlackWhiteLookupTable.png">
+<meta property="og:updated_time" content="2016-04-11T05:40:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜">
+<meta name="twitter:description" content="滤镜使用 颜色查找表(Color Lookup Table) 方法，对原图的颜色进行改变。就像 PhotoShop中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。
+
+近期公司的新 App 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 颜色查找表(Color Lookup Table) 方法是最合适不过">
+  
+    <link rel="alternative" href="/atom.xml" title="疯狂的冲浪者" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/image/icon.JPG" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">冲浪</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">爱摄影的码农</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/CrazySurfBoy" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">冲浪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/image/icon.JPG" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">冲浪</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">爱摄影的码农</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/CrazySurfBoy" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-GPUImageLookupTable" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/11/GPUImageLookupTable/" class="article-date">
+  	<time datetime="2016-04-10T16:00:00.000Z" itemprop="datePublished">2016-04-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Filter/">Filter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GPUImage/">GPUImage</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
+</blockquote>
+<p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
+<p>方法找对了这事很重要！因为很多后续开发都与滤镜相关。</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/GPUImageLookupTable" target="_blank" rel="external">（完整的示例下载）</a>：</p>
+<p><img src="/image/GPUImageLookupTable.gif" alt="演示"> </p>
+<p>接下来的代码简单到你不相信，是的就是这么简单。</p>
+<a id="more"></a>
+<h3 id="1、Original_Lookup_Table"><strong>1、Original Lookup Table</strong></h3><p><img src="/image/OriginalLookupTable.png" alt="演示"><br><code>颜色查找表</code> 是将现有的颜色进行一次（矩阵）转换，而很多的滤镜功能就是提供了这么一个转换的矩阵，在原始色彩的基础上进行颜色的转换。</p>
+<h3 id="2、使用_PhotoShop_对_Original_Lookup_Table_进行颜色的改变"><strong>2、使用 <code>PhotoShop</code> 对 <code>Original Lookup Table</code> 进行颜色的改变</strong></h3><p>很多码农对 <code>PhotoShop</code> 很陌生(我玩摄影懂一点)不过没关系，因为做法简单，直接告诉设计师都能懂。</p>
+<ul>
+<li><p><strong>1、从 <code>PhotoShop</code> 中打开一张想要调整色调的图（一般为比较中性的原图）。</strong></p>
+</li>
+<li><p><strong>2、打开 <code>PhotoShop</code> 动作面板，开始记下你的操作。</strong></p>
+</li>
+<li><p><strong>3、对原图进行色调的调整（这种方法只会对颜色起效）。</strong></p>
+</li>
+<li><p><strong>4、调整完后保存动作，并在动作面板删掉一些不是调整色调的其它操作。</strong></p>
+</li>
+<li><p><strong>5、打开 <code>Original Lookup Table</code> 的原图，并从动作面板中执行刚刚保存的动作</strong></p>
+</li>
+<li><p><strong>6、导出图片</strong></p>
+</li>
+</ul>
+<p>为了更清楚的演示调色后的图，我特意调成了黑白。就是开头看到演示的 <code>GIF</code> 的效果。</p>
+<p>(调整前)<br><img src="/image/OriginalLookupTable.png" alt="演示"> </p>
+<p>(调整后)<br><img src="/image/BlackWhiteLookupTable.png" alt="演示"> </p>
+<p>-</p>
+<h3 id="3、在代码中使用_Lookup_Table_对图像执行滤镜效果"><strong>3、在代码中使用 Lookup Table 对图像执行滤镜效果</strong></h3><p>非常有名的第三方图像处理库 GPUImage 想必你一定听说过，如何安装使用网上文章有很多这里就不详说了。</p>
+<p>– <strong>配置滤镜信息</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 滤镜</span></span><br><span class="line">- (<span class="keyword">void</span>)initFilterView &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 配置信息</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.filterList</span> = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滤镜数据</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *filterData1 = @&#123;<span class="string">@"lookupImage"</span>:<span class="string">@"OriginalLookupTable.png"</span>, <span class="string">@"title"</span>:<span class="string">@"原图"</span>&#125;;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterList</span> addObject:filterData1];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSDictionary</span> *filterData2 = @&#123;<span class="string">@"lookupImage"</span>:<span class="string">@"LookupTable1.png"</span>, <span class="string">@"title"</span>:<span class="string">@"怀旧"</span>&#125;;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterList</span> addObject:filterData2];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSDictionary</span> *filterData3 = @&#123;<span class="string">@"lookupImage"</span>:<span class="string">@"LookupTable2.png"</span>, <span class="string">@"title"</span>:<span class="string">@"黑白"</span>&#125;;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterList</span> addObject:filterData3];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滤镜区域</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.filterView</span> = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0.0</span>f, SCREEN_HEIGHT - <span class="number">64</span> - <span class="number">100</span>, SCREEN_WDITH, <span class="number">100</span> )];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.filterView</span> setBackgroundColor:[<span class="built_in">UIColor</span> colorFromHexCode:<span class="string">@"3a424d"</span>]];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.filterView</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建选择滑动的滤镜</span></span><br><span class="line">    [<span class="keyword">self</span> crateFilters];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把滤镜写成以配置方式是考虑到以后很有可能从网上下载滤镜，然后会以本地数据库 <code>Sqlite</code> 形式保存相关参数。</p>
+<p> – <strong>创建滤镜</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建滤镜</span></span><br><span class="line">- (<span class="keyword">void</span>)crateFilters &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 总数</span></span><br><span class="line">    NSInteger filterTotal = [self.filterList count];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 预览的效果图 - 一般做法是需要压缩成当前图像的大小，例如 60 *60 例子我是直接使用的。</span></span><br><span class="line">    UIImage *smallImage = self.originalImage;</span><br><span class="line"></span><br><span class="line">    NSInteger i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt; filterTotal; i++) &#123;</span><br><span class="line"></span><br><span class="line">        NSMutableDictionary *tempFilterData = self.filterList[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Box</span></span><br><span class="line">        UIView *filterBoxView = [[UIView alloc] initWithFrame:CGRectMake(i*<span class="number">70</span>, <span class="number">10.0</span>, <span class="number">70.0</span>f, <span class="number">80.0</span>f)];</span><br><span class="line">        [self.filterView addSubview:filterBoxView];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 预览的图像</span></span><br><span class="line">        UIImage *filteredImage = [self filterImage:smallImage withLUTNamed:tempFilterData[@<span class="string">"lookupImage"</span>]];</span><br><span class="line">        UIImageView *tempFilterImageView = [[UIImageView alloc] initWithFrame:CGRectMake(<span class="number">10.0</span>f, <span class="number">0.0</span>f, <span class="number">60.0</span>f, <span class="number">60.0</span>f)];</span><br><span class="line">        tempFilterImageView.image = filteredImage;</span><br><span class="line">        [filterBoxView addSubview:tempFilterImageView];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 文字</span></span><br><span class="line">        UILabel *filterLabel = [[UILabel alloc] initWithFrame:CGRectMake(<span class="number">10.0</span>, <span class="number">60.0</span>, <span class="number">60.0</span>, <span class="number">20.0</span>)];</span><br><span class="line">        filterLabel.text = tempFilterData[@<span class="string">"title"</span>];</span><br><span class="line">        filterLabel.backgroundColor = [UIColor colorWithRed:<span class="number">66</span>/<span class="number">255.0</span> green:<span class="number">212</span>/<span class="number">255.0</span> blue:<span class="number">153</span>/<span class="number">255.0</span> alpha:<span class="number">0.75</span>];</span><br><span class="line">        filterLabel.font = [UIFont systemFontOfSize:<span class="number">11</span>];</span><br><span class="line">        filterLabel.textAlignment = NSTextAlignmentCenter;</span><br><span class="line">        filterLabel.textColor = [UIColor whiteColor];</span><br><span class="line">        [filterBoxView addSubview:filterLabel];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 操作</span></span><br><span class="line">        UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">        actionButton.frame  = CGRectMake(<span class="number">10</span>, <span class="number">0.0</span>f, <span class="number">60.0</span>f, <span class="number">80.0</span>f);</span><br><span class="line">        [[actionButton layer] setBorderColor:[[UIColor colorFromHexCode:@<span class="string">"057fed"</span>] CGColor]];</span><br><span class="line">        actionButton.tag = i + <span class="number">20</span>;</span><br><span class="line">        [actionButton addTarget:self action:@selector(filterButtonClick:) forControlEvents:UIControlEventTouchUpInside |UIControlEventTouchDragOutside];</span><br><span class="line">        [filterBoxView addSubview:actionButton];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认选中原图</span></span><br><span class="line">    UIButton *originalButton = [self.view viewWithTag:<span class="number">20</span>];</span><br><span class="line">    [self filterButtonClick:originalButton];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面是生成滤镜预览图，也许你会问这样子会不会很慢？例如生成10多个的。在强大的 <code>iPhone</code> 性能面前事实上并不会，遇到卡况且也有很多种方法去忧化。</p>
+<p>– <strong>生成滤镜效果</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 图片进行滤镜添加操作</span></span><br><span class="line">- (UIImage *)filterImage:(UIImage *)originalImage withLUTNamed:(NSString *)lutName &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立原图与</span></span><br><span class="line">    GPUImagePicture *originalImageSource = [[GPUImagePicture alloc] initWithImage:originalImage];</span><br><span class="line">    GPUImagePicture *lookupImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:lutName]];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用这个滤镜类就可以直接对图片进行滤镜添加操作</span></span><br><span class="line">    GPUImageLookupFilter *lookupFilter = [[GPUImageLookupFilter alloc] init];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 进行滤镜处理</span></span><br><span class="line">    [originalImageSource addTarget:lookupFilter];</span><br><span class="line">    [originalImageSource processImage];</span><br><span class="line"></span><br><span class="line">    [lookupImageSource addTarget:lookupFilter];</span><br><span class="line">    [lookupImageSource processImage];</span><br><span class="line"></span><br><span class="line">    [lookupFilter useNextFrameForImageCapture];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [lookupFilter imageFromCurrentFramebufferWithOrientation:UIImageOrientationUp];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码就是最核心方法了是不是很简单，比起我当初完全没有想象的中的简单多了。</p>
+<h3 id="4、给滤镜的源图像进行加密"><strong>4、给滤镜的源图像进行加密</strong></h3><p>你肯定会想辛辛苦苦的设计师调完的滤镜，别人只有导出APP的包就可以看到资源文件那不就白干了吗？</p>
+<p>其实我们可以将图像转成 <code>NSData</code>，然后再某个位置加上 <code>token</code> 进行拼接然后保存为文件。读取的时候进行解密就好，性能上麻肯定会有所影响不过我认为影响很微。如果你的滤镜好到别人要逆向工程破解，你早就换一种更有效的方法了。</p>
+<h3 id="总结"><strong>总结</strong></h3><p><code>GPUImage</code> 的确是一个伟大的第三方图像处理库，极大简化了我们的工作。 <code>filterImage:</code> 方法看似很简单也花掉了很长的时间去学习研究，各种的折腾希望帮到你。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/07/SQLiteInsertData/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FMDB SQLite 插入 Data 类型的问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="GPUImageLookupTable" data-title="GPUImage - 颜色查找表(Color Lookup Table) 为图片添加滤镜" data-url="http://www.crazysurfboy.com/2016/04/11/GPUImageLookupTable/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 冲浪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-72548804-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
