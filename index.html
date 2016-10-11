@@ -97,7 +97,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/CSProgressButton/" style="font-size: 10px;">CSProgressButton</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
 					</div>
 				</section>
 				
@@ -150,6 +150,156 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-CSProgressButton" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/05/CSProgressButton/" class="article-date">
+  	<time datetime="2016-10-04T16:00:00.000Z" itemprop="datePublished">2016-10-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/05/CSProgressButton/">CSProgressButton 带进度状态的按扭</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>点击按扭出现旋转的加载动画，触发后图标状态发生变化。</p>
+</blockquote>
+<p>最近写的一个通用组件，不怎么好描述看效果图吧。需求就是点击按扭发送一个<strong>请求</strong>到服务器时出现进度旋转，当<strong>请求</strong>成功后打个勾不成功恢复原来的状态。</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/CSProgressButton">（完整的示例下载）</a>：</p>
+<p><img src="/image/CSProgressButtong.gif" alt="演示"></p>
+<h3 id="1、调用"><strong>1、调用</strong></h3><p>使用 <code>Block</code> 都知道很容易造成循环引用，由于我自己的项目是使用 <code>reactivecocoa</code> 所以我能直接使用 <code>@weakify(self);</code>, <code>@strongify(self);</code> 来打破循环引用。至于其它方法 <code>Google</code> 有很多，这里就不加进来了。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSProgressButton/">CSProgressButton</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/10/05/CSProgressButton/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-MVVM" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/01/MVVM/" class="article-date">
+  	<time datetime="2016-09-30T16:00:00.000Z" itemprop="datePublished">2016-10-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/01/MVVM/">MVVM 模式下iOS项目架构基本说明</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>虽然开发了<code>iOS</code>有些年，但项目基本设计模式还是最常见的 <code>MVC</code> （模型，视图，控制器）。但最近在工作中接触到 <code>MVVM</code> 的设计模式，至于它比 <code>MVC</code> 的优越性在哪里呢？下面慢慢的说明</p>
+</blockquote>
+<h3 id="1、MVVM_模式介绍"><strong>1、MVVM 模式介绍</strong></h3><p><strong>(由于MVVM 模式介绍基本都一样，我摘录了一段)</strong><br><code>MVVM</code> 是 <code>Model-View-View Model</code> 的缩写，<code>MVVM</code> 听起来好像很复杂的样子，但它本质上就是 <code>MVC</code> 的改进版。<code>MVVM</code> 就是将其中的 <code>View</code>的状态和行为抽象化，让我们将视图 <code>UI</code> 和业务逻辑分开。当然这些事 <code>ViewModel</code> 已经帮我们做了，它可以取出 <code>Model</code> 的数据同时帮忙处理 <code>View</code>中由于需要展示内容而涉及的业务逻辑。在 <code>iOS</code> 中使用 MVVM 可以将 <code>ViewController</code> 中处理 <code>Mode</code> 的业务逻辑全部交由 <code>ViewModel</code>，让 <code>ViewController</code> 不再显的特别臃肿。</p>
+<p><strong>MVVM 模式是通过下面三个核心组件组成，每个都有它自己所要处理的事情：</strong></p>
+<ul>
+<li><p><code>Model</code> -数据模型</p>
+</li>
+<li><p><code>View</code> – 用来将 <code>Model</code> 的内容显示出来</p>
+</li>
+<li><p><code>ViewModel</code> - 扮演 <code>View</code>和 <code>Model</code> 之间的使者，帮忙处理 <code>View</code> 的业务逻辑</p>
+</li>
+</ul>
+<p>如图:</p>
+<p><img src="/image/mvvm.png" alt="演示"> </p>
+<p><strong>那么MVVM 模式有什优点呢？</strong></p>
+<ol>
+<li><p>低耦合。视图（<code>View</code>）可以独立于Model变化和修改，一个ViewModel可以绑定到不同的 <code>View</code>上，当 <code>View</code>变化的时候 <code>Model</code> 可以不变，当 <code>Model</code> 变化的时候 <code>View</code> 也可以不变。</p>
+</li>
+<li><p>可重用性。你可以把一些视图逻辑放在一个 <code>ViewModel</code> 里面，让很多 <code>view</code> 重用这段视图逻辑。</p>
+</li>
+<li><p>独立开发。开发人员可以专注于业务逻辑和数据的开发（<code>ViewModel</code>），设计人员可以专注于页面设计。</p>
+</li>
+<li><p>可测试。界面素来是比较难于测试的，而使用 <code>MVVM</code> 的一大好处是我们可以很容易对 <code>ViewModel</code> 进行单元测试</p>
+</li>
+</ol>
+<h3 id="2、基本目录结构"><strong>2、基本目录结构</strong></h3><p>这个目录架构是参考很多篇对于 <code>MVVM</code> 介绍的文章以及结合我工作中实际情况所列的目录架构。目录多数基于 <code>Group</code> 来建立，所在可以随时跟着项目的迭代而进行改变。同时也减少文名重命名的情况也方便文件的查找。</p>
+<p><strong>如图:</strong></p>
+<p><img src="/image/mvvm_xcode.png" alt="演示"> </p>
+<h3 id="Resource"><strong>Resource</strong></h3><p>存放资源文件，目录里面的都是实体的文件夹</p>
+<p><img src="/image/mvvm_resource.png" alt="演示"></p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVVM/">MVVM</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/10/01/MVVM/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-GPUImageLookupTable" class="article article-type-post" itemscope itemprop="blogPost">
   
