@@ -246,7 +246,7 @@
         <blockquote><p>点击按扭出现旋转的加载动画，触发后图标状态发生变化。</p>
 </blockquote>
 <p>最近写的一个通用组件，不怎么好描述看效果图吧。需求就是点击按扭发送一个<strong>请求</strong>到服务器时出现进度旋转，当<strong>请求</strong>成功后打个勾不成功恢复原来的状态。</p>
-<p>效果如下<a href="https://github.com/CrazySurfBoy/CSProgressButton">（完整的示例下载）</a>：</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/CSSwitch">（完整的示例下载）</a>：</p>
 <p><img src="/image/CSProgressButtong.gif" alt="演示"></p>
 <h3 id="1、调用"><strong>1、调用</strong></h3><p>使用 <code>Block</code> 都知道很容易造成循环引用，由于我自己的项目是使用 <code>reactivecocoa</code> 所以我能直接使用 <code>@weakify(self);</code>, <code>@strongify(self);</code> 来打破循环引用。至于其它方法 <code>Google</code> 有很多，这里就不加进来了。</p>
 <p><strong>ViewController.m</strong></p>
