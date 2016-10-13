@@ -97,7 +97,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/CSProgressButton/" style="font-size: 10px;">CSProgressButton</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/CSProgressButton/" style="font-size: 10px;">CSProgressButton</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UISwitch/" style="font-size: 10px;">UISwitch</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
 					</div>
 				</section>
 				
@@ -151,6 +151,72 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-CSSwitch" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/13/CSSwitch/" class="article-date">
+  	<time datetime="2016-10-12T16:00:00.000Z" itemprop="datePublished">2016-10-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/13/CSSwitch/">一个可以完全自定义的 UISwitch</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>我写的 <code>CSSwitch</code> 继承于 <code>UIControl</code> 是一个高度自定义的组件。它没有过多的花俏的东西很实在也很符合项目的需求。</p>
+</blockquote>
+<p>在看到现有的 <code>UISwitch</code> 不能满足产品需求的时候相信很多人第一时间去找第三方开源组件，我也一样找到了一个 <a href="https://github.com/JunichiT/JTMaterialSwitch">（JTMaterialSwitch）</a>看上去不错的样子。</p>
+<p>习惯性的看它的文档和源码发现它提供了很多的自定义接口和带有阴影的效果，但我只需要一个到二个默认的配置就好并且希望使用 <code>Block</code>进行回调与不是 <code>Delegate</code>。在思考了一会之后我决定阅读它的源码并参考它重新写一个简易版，因为的确实现起来不难。</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/CSProgressButton">（完整的示例下载）</a>：</p>
+<p><img src="/image/CSSwitch.gif" alt="演示"></p>
+<h3 id="1、调用"><strong>1、调用</strong></h3><p>调用的方法非常简单，下面是默认的配置样式的 <code>Switch</code>。</p>
+<p><strong>创建代码</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建</span></span><br><span class="line"><span class="built_in">CGRect</span> screenFrame = [[<span class="built_in">UIScreen</span> mainScreen] bounds];</span><br><span class="line">CSSwitch *csSwitch = [[CSSwitch alloc] init];</span><br><span class="line">csSwitch<span class="variable">.center</span> = <span class="built_in">CGPointMake</span>(screenFrame<span class="variable">.size</span><span class="variable">.width</span> - <span class="number">140</span>, <span class="number">37</span>);</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.view</span> addSubview:csSwitch];</span><br><span class="line"></span><br><span class="line">csSwitch<span class="variable">.switchStateChangedBlock</span> = ^(CSSwitchState switchState) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"CSSwitchState:%ld"</span>, switchState);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UISwitch/">UISwitch</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/10/13/CSSwitch/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-CSProgressButton" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -182,7 +248,10 @@
 <p>最近写的一个通用组件，不怎么好描述看效果图吧。需求就是点击按扭发送一个<strong>请求</strong>到服务器时出现进度旋转，当<strong>请求</strong>成功后打个勾不成功恢复原来的状态。</p>
 <p>效果如下<a href="https://github.com/CrazySurfBoy/CSProgressButton">（完整的示例下载）</a>：</p>
 <p><img src="/image/CSProgressButtong.gif" alt="演示"></p>
-<h3 id="1、调用"><strong>1、调用</strong></h3><p>使用 <code>Block</code> 都知道很容易造成循环引用，由于我自己的项目是使用 <code>reactivecocoa</code> 所以我能直接使用 <code>@weakify(self);</code>, <code>@strongify(self);</code> 来打破循环引用。至于其它方法 <code>Google</code> 有很多，这里就不加进来了。<br>
+<h3 id="1、调用"><strong>1、调用</strong></h3><p>使用 <code>Block</code> 都知道很容易造成循环引用，由于我自己的项目是使用 <code>reactivecocoa</code> 所以我能直接使用 <code>@weakify(self);</code>, <code>@strongify(self);</code> 来打破循环引用。至于其它方法 <code>Google</code> 有很多，这里就不加进来了。</p>
+<p><strong>ViewController.m</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  ViewController.m</span></span><br><span class="line"><span class="comment">//  CSProgressButton</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by SurfBoy on 11/10/2016.</span></span><br><span class="line"><span class="comment">//  Copyright © 2016 CrazySurfboy. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">"ViewController.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"CSProgressButton.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height</span></span><br><span class="line"><span class="preprocessor">#define SCREEN_WDITH [UIScreen mainScreen].bounds.size.width</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</span><br><span class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</span><br><span class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    </span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.title</span> = <span class="string">@"Demo"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Add</span></span><br><span class="line">    CSProgressButton *progressButton = [[CSProgressButton alloc] initWithFrame:<span class="built_in">CGRectMake</span>(SCREEN_WDITH/<span class="number">2</span>-<span class="number">25</span>, <span class="number">100.0</span>f, <span class="number">25.0</span>f, <span class="number">25.0</span>f)];</span><br><span class="line">    progressButton<span class="variable">.startButtonImage</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"subscribed_add_blue_button_icon"</span>];</span><br><span class="line">    progressButton<span class="variable">.endButtonImage</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"subscribed_button_icon"</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:progressButton];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始</span></span><br><span class="line">    <span class="comment">// @weakify(self);</span></span><br><span class="line">    progressButton<span class="variable">.startButtonDidTapBlock</span> = ^(CSProgressButton *progressButton) &#123;</span><br><span class="line">        <span class="comment">// @strongify(self);</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2秒</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"startButtonDidTapBlock"</span>);</span><br><span class="line">        [<span class="keyword">self</span> progressButtonClick:progressButton];</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 结束</span></span><br><span class="line">    progressButton<span class="variable">.endButtonDidTapBlock</span> = ^(CSProgressButton *progressButton) &#123;</span><br><span class="line">            </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"endButtonDidTapBlock"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击事件</span></span><br><span class="line">- (<span class="keyword">void</span>)progressButtonClick:(CSProgressButton *)progressButton &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 两秒后执行</span></span><br><span class="line">    <span class="keyword">double</span> delayInSeconds = <span class="number">2.0</span>;</span><br><span class="line">    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * <span class="built_in">NSEC_PER_SEC</span>));</span><br><span class="line">    dispatch_after(popTime, dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        </span><br><span class="line">        [progressButton endProgress];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>可以看到回调都是吧 <code>Block</code> 为主非常的方便。设计它的场景主要是在订阅列表，直接点击就可以订阅。如下图:<br>
       
     </div>
     
@@ -766,67 +835,10 @@
 
 
   
-    <article id="post-viewControllerTransitioning" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2015/10/12/viewControllerTransitioning/" class="article-date">
-  	<time datetime="2015-10-11T16:00:00.000Z" itemprop="datePublished">2015-10-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/viewControllerTransitioning/">自定义 View Controller 转场动画(1)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文探讨了改变 <code>UINavigationController</code> 两个 <code>view controller</code> 之间的转场动画，但是这些做法在其它自己定义的 <code>view controller</code> 容器也是通用的，后续的文章也会有探讨。</p>
-<p>看一下我们要实现的效果如下<a href="https://github.com/CrazySurfBoy/ViewControllerTransition_1">（示例下载）</a>：</p>
-<p><img src="/image/transition1.gif" alt="演示"> </p>
-<p>下面我要看看代码是如何实现的 ( UI是用代码创建的，你很方便的能修改 )。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Animation/">Animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Transitioning/">Transitioning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UINavigationController/">UINavigationController</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/12/viewControllerTransitioning/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">
