@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-10-13T15:42:25.000Z</updated>
+  <updated>2016-10-13T16:36:24.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -19,12 +19,12 @@
     <link href="http://www.crazysurfboy.com/2016/10/13/CSSwitch/"/>
     <id>http://www.crazysurfboy.com/2016/10/13/CSSwitch/</id>
     <published>2016-10-12T16:00:00.000Z</published>
-    <updated>2016-10-13T15:42:25.000Z</updated>
+    <updated>2016-10-13T16:36:24.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>我写的 <code>CSSwitch</code> 继承于 <code>UIControl</code> 是一个高度自定义的组件。它没有过多的花俏的东西很实在也很符合项目的需求。</p>
 </blockquote>
 <p>在看到现有的 <code>UISwitch</code> 不能满足产品需求的时候相信很多人第一时间去找第三方开源组件，我也一样找到了一个 <a href="https://github.com/JunichiT/JTMaterialSwitch" target="_blank" rel="external">（JTMaterialSwitch）</a>看上去不错的样子。</p>
 <p>习惯性的看它的文档和源码发现它提供了很多的自定义接口和带有阴影的效果，但我只需要一个到二个默认的配置就好并且希望使用 <code>Block</code>进行回调与不是 <code>Delegate</code>。在思考了一会之后我决定阅读它的源码并参考它重新写一个简易版，因为的确实现起来不难。</p>
-<p>效果如下<a href="https://github.com/CrazySurfBoy/CSProgressButton" target="_blank" rel="external">（完整的示例下载）</a>：</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/CSSwitch" target="_blank" rel="external">（完整的示例下载）</a>：</p>
 <p><img src="/image/CSSwitch.gif" alt="演示"></p>
 <h3 id="1、调用"><strong>1、调用</strong></h3><p>调用的方法非常简单，下面是默认的配置样式的 <code>Switch</code>。</p>
 <p><strong>创建代码</strong></p>
@@ -44,7 +44,7 @@
 </blockquote>
 <p>在看到现有的 <code>UISwitch</code> 不能满足产品需求的时候相信很多人第一时间去找第三方开源组件，我也一样找到了一个 <a href="https://github.com/JunichiT/JTMaterialSwitch">（JTMaterialSwitch）</a>看上去不错的样子。</p>
 <p>习惯性的看它的文档和源码发现它提供了很多的自定义接口和带有阴影的效果，但我只需要一个到二个默认的配置就好并且希望使用 <code>Block</code>进行回调与不是 <code>Delegate</code>。在思考了一会之后我决定阅读它的源码并参考它重新写一个简易版，因为的确实现起来不难。</p>
-<p>效果如下<a href="https://github.com/CrazySurfBoy/CSProgressButton">（完整的示例下载）</a>：</p>
+<p>效果如下<a href="https://github.com/CrazySurfBoy/CSSwitch">（完整的示例下载）</a>：</p>
 <p><img src="/image/CSSwitch.gif" alt="演示"></p>
 <h3 id="1、调用"><strong>1、调用</strong></h3><p>调用的方法非常简单，下面是默认的配置样式的 <code>Switch</code>。</p>
 <p><strong>创建代码</strong></p>
