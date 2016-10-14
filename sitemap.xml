@@ -2,63 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.crazysurfboy.com/2016/10/14/MySqlResetPassword/</loc>
-    <lastmod>2016-10-14T09:25:14.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2016/10/05/CSProgressButton/</loc>
-    <lastmod>2016-10-13T16:38:00.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2016/10/13/CSSwitch/</loc>
-    <lastmod>2016-10-13T16:36:24.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2016/10/01/MVVM/</loc>
-    <lastmod>2016-10-11T07:35:33.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2016/04/11/GPUImageLookupTable/</loc>
-    <lastmod>2016-04-11T05:40:11.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/</loc>
-    <lastmod>2016-03-07T07:31:58.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.crazysurfboy.com/2016/01/31/Rejected/</loc>
-    <lastmod>2016-01-31T03:56:02.000Z</lastmod>
+    <loc>http://www.crazysurfboy.com/2015/10/12/viewControllerTransitioning/</loc>
+    <lastmod>2016-10-14T09:37:24.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/</loc>
-    <lastmod>2016-01-30T11:37:12.000Z</lastmod>
+    <lastmod>2016-10-14T09:37:19.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.crazysurfboy.com/2015/10/12/viewControllerTransitioning/</loc>
-    <lastmod>2016-01-15T02:39:07.000Z</lastmod>
+    <loc>http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/</loc>
+    <lastmod>2016-10-14T09:37:14.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://www.crazysurfboy.com/2015/10/13/SplashView/</loc>
-    <lastmod>2016-01-15T02:38:44.000Z</lastmod>
+    <lastmod>2016-10-14T09:37:10.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2016/01/31/Rejected/</loc>
+    <lastmod>2016-10-14T09:37:05.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/</loc>
-    <lastmod>2016-01-15T02:38:14.000Z</lastmod>
+    <lastmod>2016-10-14T09:36:58.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2016/10/01/MVVM/</loc>
+    <lastmod>2016-10-14T09:36:53.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://www.crazysurfboy.com/2016/01/13/LoginWithReactiveCocoa/</loc>
-    <lastmod>2016-01-15T02:36:47.000Z</lastmod>
+    <lastmod>2016-10-14T09:36:48.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2016/04/11/GPUImageLookupTable/</loc>
+    <lastmod>2016-10-14T09:36:43.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2016/10/13/CSSwitch/</loc>
+    <lastmod>2016-10-14T09:36:37.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2016/10/05/CSProgressButton/</loc>
+    <lastmod>2016-10-14T09:36:08.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.crazysurfboy.com/2016/10/14/MySqlResetPassword/</loc>
+    <lastmod>2016-10-14T09:34:47.000Z</lastmod>
   </url>
   
 </urlset>

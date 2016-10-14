@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-10-14T09:25:14.000Z</updated>
+  <updated>2016-10-14T09:34:47.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.crazysurfboy.com/2016/10/14/MySqlResetPassword/"/>
     <id>http://www.crazysurfboy.com/2016/10/14/MySqlResetPassword/</id>
     <published>2016-10-13T16:00:00.000Z</published>
-    <updated>2016-10-14T09:25:14.000Z</updated>
+    <updated>2016-10-14T09:34:47.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>最近升级了系统了也随带升级了 <code>MySql</code> ，在安装时好像有提示<strong>临时密码</strong>，但很不幸我把它忘记了只能重设了。把它写成 <code>Blog</code> 当作笔记方便以后查找也可以给需要的人。</p>
 </blockquote>
 <p>重置 <code>MySql</code> 方法很简单，按如下命令直接输入就好</p>
@@ -35,6 +35,8 @@
     <![CDATA[<blockquote><p>最近升级了系统了也随带升级了 <code>MySql</code> ，在安装时好像有提示<strong>临时密码</strong>，但很不幸我把它忘记了只能重设了。把它写成 <code>Blog</code> 当作笔记方便以后查找也可以给需要的人。<]]>
     </summary>
     
+      <category term="Mac" scheme="http://www.crazysurfboy.com/tags/Mac/"/>
+    
       <category term="MySql" scheme="http://www.crazysurfboy.com/tags/MySql/"/>
     
   </entry>
@@ -44,7 +46,7 @@
     <link href="http://www.crazysurfboy.com/2016/10/13/CSSwitch/"/>
     <id>http://www.crazysurfboy.com/2016/10/13/CSSwitch/</id>
     <published>2016-10-12T16:00:00.000Z</published>
-    <updated>2016-10-13T16:36:24.000Z</updated>
+    <updated>2016-10-14T09:36:37.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>我写的 <code>CSSwitch</code> 继承于 <code>UIControl</code> 是一个高度自定义的组件。它没有过多的花俏的东西很实在也很符合项目的需求。</p>
 </blockquote>
 <p>在看到现有的 <code>UISwitch</code> 不能满足产品需求的时候相信很多人第一时间去找第三方开源组件，我也一样找到了一个 <a href="https://github.com/JunichiT/JTMaterialSwitch" target="_blank" rel="external">（JTMaterialSwitch）</a>看上去不错的样子。</p>
@@ -79,6 +81,8 @@
     
       <category term="UISwitch" scheme="http://www.crazysurfboy.com/tags/UISwitch/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -86,7 +90,7 @@
     <link href="http://www.crazysurfboy.com/2016/10/05/CSProgressButton/"/>
     <id>http://www.crazysurfboy.com/2016/10/05/CSProgressButton/</id>
     <published>2016-10-04T16:00:00.000Z</published>
-    <updated>2016-10-13T16:38:00.000Z</updated>
+    <updated>2016-10-14T09:36:08.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>点击按扭出现旋转的加载动画，触发后图标状态发生变化。</p>
 </blockquote>
 <p>最近写的一个通用组件，不怎么好描述看效果图吧。需求就是点击按扭发送一个<strong>请求</strong>到服务器时出现进度旋转，当<strong>请求</strong>成功后打个勾不成功恢复原来的状态。</p>
@@ -118,6 +122,8 @@
     
       <category term="CSProgressButton" scheme="http://www.crazysurfboy.com/tags/CSProgressButton/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -125,7 +131,7 @@
     <link href="http://www.crazysurfboy.com/2016/10/01/MVVM/"/>
     <id>http://www.crazysurfboy.com/2016/10/01/MVVM/</id>
     <published>2016-09-30T16:00:00.000Z</published>
-    <updated>2016-10-11T07:35:33.000Z</updated>
+    <updated>2016-10-14T09:36:53.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>虽然开发了<code>iOS</code>有些年，但项目基本设计模式还是最常见的 <code>MVC</code> （模型，视图，控制器）。但最近在工作中接触到 <code>MVVM</code> 的设计模式，至于它比 <code>MVC</code> 的优越性在哪里呢？下面慢慢的说明</p>
 </blockquote>
 <h3 id="1、MVVM_模式介绍"><strong>1、MVVM 模式介绍</strong></h3><p><strong>(由于MVVM 模式介绍基本都一样，我摘录了一段)</strong><br><code>MVVM</code> 是 <code>Model-View-View Model</code> 的缩写，<code>MVVM</code> 听起来好像很复杂的样子，但它本质上就是 <code>MVC</code> 的改进版。<code>MVVM</code> 就是将其中的 <code>View</code>的状态和行为抽象化，让我们将视图 <code>UI</code> 和业务逻辑分开。当然这些事 <code>ViewModel</code> 已经帮我们做了，它可以取出 <code>Model</code> 的数据同时帮忙处理 <code>View</code>中由于需要展示内容而涉及的业务逻辑。在 <code>iOS</code> 中使用 MVVM 可以将 <code>ViewController</code> 中处理 <code>Mode</code> 的业务逻辑全部交由 <code>ViewModel</code>，让 <code>ViewController</code> 不再显的特别臃肿。</p>
@@ -229,6 +235,8 @@
     
       <category term="MVVM" scheme="http://www.crazysurfboy.com/tags/MVVM/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -236,7 +244,7 @@
     <link href="http://www.crazysurfboy.com/2016/04/11/GPUImageLookupTable/"/>
     <id>http://www.crazysurfboy.com/2016/04/11/GPUImageLookupTable/</id>
     <published>2016-04-10T16:00:00.000Z</published>
-    <updated>2016-04-11T05:40:11.000Z</updated>
+    <updated>2016-10-14T09:36:43.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>滤镜使用 <code>颜色查找表(Color Lookup Table)</code> 方法，对原图的颜色进行改变。就像 <code>PhotoShop</code>中的可选颜色功能，可以把某种的颜色进行改变，例如去掉图像中的黄色，仅对原图进行颜色的更改。</p>
 </blockquote>
 <p>近期公司的新 <code>App</code> 有图像编辑功能的需求，对我们来说是个新东西大家都没接触过。我查找了很多的资料和例子，最终确定下来使用 <code>颜色查找表(Color Lookup Table)</code> 方法是最合适不过的。因为程序员只要设置好相关代码，无论多少个滤镜效果都可以全部交给设计去做，而我呢只需要配置个文件就可以了。</p>
@@ -291,6 +299,8 @@
     
       <category term="GPUImage" scheme="http://www.crazysurfboy.com/tags/GPUImage/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -298,7 +308,7 @@
     <link href="http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/"/>
     <id>http://www.crazysurfboy.com/2016/03/07/SQLiteInsertData/</id>
     <published>2016-03-06T16:00:00.000Z</published>
-    <updated>2016-03-07T07:31:58.000Z</updated>
+    <updated>2016-10-14T09:37:14.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p><code>FMDB</code> 是轻量级的框架，对 <code>SQLite API</code> 进行了友好的封装，使用起来相当的灵活。同时也非常符合从 <code>Web</code> 开发转移动端开发的人员对数据库的使用，相信你会喜欢它的。</p>
 </blockquote>
 <p>最近在做模板下载，需要把原来项目中的模板图片和配置文件 <code>PList</code> 保存到 <code>SQLite</code> 数据库便于与线上新模板合并。在知道用户本地的模板数据不会对 <code>SQLite</code> 造成压力，于是也把下载好的模板图片和配置参数一同写入到 <code>SQLite</code>。那样我就不用写文件管理只需要简单的一条删除 <code>SQL</code> 就完成了，简单粗爆。</p>
@@ -333,6 +343,8 @@
     
       <category term="SQLite" scheme="http://www.crazysurfboy.com/tags/SQLite/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -340,7 +352,7 @@
     <link href="http://www.crazysurfboy.com/2016/01/31/Rejected/"/>
     <id>http://www.crazysurfboy.com/2016/01/31/Rejected/</id>
     <published>2016-01-30T16:00:00.000Z</published>
-    <updated>2016-01-31T03:56:02.000Z</updated>
+    <updated>2016-10-14T09:37:05.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p><code>App</code> 审核，苹果虐我千百遍我对它如初恋，相信这是很多 <code>iOS</code> 从业的人生感悟。</p>
 </blockquote>
 <p>如果你是一枚 iOS 开发者，相信你会遇到过在应用提交审核一周后，在万分期待时然后在半夜收到 App 被拒的消息。相信这种感觉你肯定不好受，安卓的开发者你们是不会懂的！</p>
@@ -411,6 +423,8 @@
     
       <category term="Reject" scheme="http://www.crazysurfboy.com/tags/Reject/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -418,7 +432,7 @@
     <link href="http://www.crazysurfboy.com/2016/01/13/LoginWithReactiveCocoa/"/>
     <id>http://www.crazysurfboy.com/2016/01/13/LoginWithReactiveCocoa/</id>
     <published>2016-01-12T16:00:00.000Z</published>
-    <updated>2016-01-15T02:36:47.000Z</updated>
+    <updated>2016-10-14T09:36:48.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>Demo：用 <code>ReactiveCocoa</code> 做一个登录的交互效果，当用户输入邮箱或者密码不符时字体为红色并且登录按扭程灰色并不可点。相反的邮箱和密码都符合规定时字体为灰色并且登录按扭为深绿色并可点击。</p>
 </blockquote>
 <p>有点经验的都会觉得这种效果实现起来很简单但麻烦，常用的方法 <code>Delegate</code>、<code>target-action</code>、<code>KVC</code> 等组合使用，而且代码页面的粘合性也比很强。现在我们使用 <code>ReactiveCocoa</code> 来实现不但统一所有的消息，代码也更加的简洁直观，与页面的粘合性也不再这么强，相对在重用时会简单点。</p>
@@ -452,6 +466,8 @@
     
       <category term="ReactiveCocoa" scheme="http://www.crazysurfboy.com/tags/ReactiveCocoa/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -459,7 +475,7 @@
     <link href="http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/"/>
     <id>http://www.crazysurfboy.com/2015/11/16/UIWebView+JS/</id>
     <published>2015-11-15T16:00:00.000Z</published>
-    <updated>2016-01-30T11:37:12.000Z</updated>
+    <updated>2016-10-14T09:37:19.000Z</updated>
     <content type="html"><![CDATA[<blockquote><p>因为公司的APP线路的详细页有大量的HMTL和图片，而且最少也有好几屏幕的长度。再加上图片很大也很多，速度很好的情况下加载的速度也要平均在5秒左右。</p>
 </blockquote>
 <p>这个页主要使用 <code>UIWebView + HTML</code> 展示数据，另外部分 <code>View</code> 和  <code>UIWebView</code> 添加到 <code>UIScrollView</code>,这样滑动起来让用户感觉不到是网页。也许你会想为什么不用模板引擎例如：<code>MGTemplateEngine</code> 配置多种模板展示？由于运营的需求是每条线路样式和内容都会不一样无法归类成N个模板，再加上我们需要在多个平台中使用同(So…你懂的)，只能尽最大的程度去忧化。</p>
@@ -500,6 +516,8 @@
     
       <category term="WebViewJavascriptBridge" scheme="http://www.crazysurfboy.com/tags/WebViewJavascriptBridge/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -507,7 +525,7 @@
     <link href="http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/"/>
     <id>http://www.crazysurfboy.com/2015/11/03/PullRefreshAnimation/</id>
     <published>2015-11-02T16:00:00.000Z</published>
-    <updated>2016-01-15T02:38:14.000Z</updated>
+    <updated>2016-10-14T09:36:58.000Z</updated>
     <content type="html"><![CDATA[<p>我们修改流行的下拉刷新库 <a href="https://github.com/enormego/EGOTableViewPullRefresh" target="_blank" rel="external">EGOTableViewPullRefresh</a> 来完成目前多数APP都具备的下拉刷新动画，下面说说它实现的基本原理。</p>
 <p><strong>通过代理方法 <code>- (void)scrollViewDidScroll:</code> 获得当前 <code>scrollView.contentOffset.y</code> 的值，通过这个值的变化作各种的动画效果，例如演示图中的慢慢填充的效果。<br>当用户放开手后<code>- (void)scrollViewDidEndDragging:</code> 触发，当判定<code>y</code>值达到某一个负数时，就可以判定是下拉刷新操作，否而当作放弃操作。然后通过 <code>UIEdgeInsetMake</code> 设置 <code>scroll.contnetInset</code>，就可以显示刷新时间、加载等信息。当我们完成请求后调用方法重新设置 <code>scroll.contentInset</code> 的 <code>UIEdgeInsertMake top 0</code> 并设置过渡动画效果;</strong></p>
 <p>效果如下<a href="https://github.com/CrazySurfBoy/PullRefreshAnimation" target="_blank" rel="external">（完整的示例下载）</a>：</p>
@@ -544,6 +562,8 @@
     
       <category term="UITableView" scheme="http://www.crazysurfboy.com/tags/UITableView/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -551,7 +571,7 @@
     <link href="http://www.crazysurfboy.com/2015/10/13/SplashView/"/>
     <id>http://www.crazysurfboy.com/2015/10/13/SplashView/</id>
     <published>2015-10-12T16:00:00.000Z</published>
-    <updated>2016-01-15T02:38:44.000Z</updated>
+    <updated>2016-10-14T09:37:10.000Z</updated>
     <content type="html"><![CDATA[<p>这个动画效果相当的简单没什么难点，但效果还算是不错的。索性就贴出来给有需要的朋友。</p>
 <p><img src="/image/splashView.gif" alt="演示"> </p>
 <p>下面我要看看代码是如何实现的</p>
@@ -567,6 +587,8 @@
     
       <category term="Animation" scheme="http://www.crazysurfboy.com/tags/Animation/"/>
     
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
+    
   </entry>
   
   <entry>
@@ -574,7 +596,7 @@
     <link href="http://www.crazysurfboy.com/2015/10/12/viewControllerTransitioning/"/>
     <id>http://www.crazysurfboy.com/2015/10/12/viewControllerTransitioning/</id>
     <published>2015-10-11T16:00:00.000Z</published>
-    <updated>2016-01-15T02:39:07.000Z</updated>
+    <updated>2016-10-14T09:37:24.000Z</updated>
     <content type="html"><![CDATA[<p>本文探讨了改变 <code>UINavigationController</code> 两个 <code>view controller</code> 之间的转场动画，但是这些做法在其它自己定义的 <code>view controller</code> 容器也是通用的，后续的文章也会有探讨。</p>
 <p>看一下我们要实现的效果如下<a href="https://github.com/CrazySurfBoy/ViewControllerTransition_1" target="_blank" rel="external">（示例下载）</a>：</p>
 <p><img src="/image/transition1.gif" alt="演示"> </p>
@@ -618,6 +640,8 @@
       <category term="Transitioning" scheme="http://www.crazysurfboy.com/tags/Transitioning/"/>
     
       <category term="UINavigationController" scheme="http://www.crazysurfboy.com/tags/UINavigationController/"/>
+    
+      <category term="iOS" scheme="http://www.crazysurfboy.com/tags/iOS/"/>
     
   </entry>
   
