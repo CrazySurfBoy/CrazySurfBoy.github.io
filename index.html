@@ -97,7 +97,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/CSProgressButton/" style="font-size: 10px;">CSProgressButton</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UISwitch/" style="font-size: 10px;">UISwitch</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
+						<a href="/tags/Animation/" style="font-size: 20px;">Animation</a> <a href="/tags/CALayer/" style="font-size: 10px;">CALayer</a> <a href="/tags/CSProgressButton/" style="font-size: 10px;">CSProgressButton</a> <a href="/tags/FMDB/" style="font-size: 10px;">FMDB</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/GPUImage/" style="font-size: 10px;">GPUImage</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/MySql/" style="font-size: 10px;">MySql</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Reject/" style="font-size: 10px;">Reject</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Transitioning/" style="font-size: 10px;">Transitioning</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/UIScrollView/" style="font-size: 10px;">UIScrollView</a> <a href="/tags/UISwitch/" style="font-size: 10px;">UISwitch</a> <a href="/tags/UITableView/" style="font-size: 10px;">UITableView</a> <a href="/tags/UIWebView/" style="font-size: 10px;">UIWebView</a> <a href="/tags/WebViewJavascriptBridge/" style="font-size: 10px;">WebViewJavascriptBridge</a>
 					</div>
 				</section>
 				
@@ -150,6 +150,70 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-MySqlResetPassword" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/14/MySqlResetPassword/" class="article-date">
+  	<time datetime="2016-10-13T16:00:00.000Z" itemprop="datePublished">2016-10-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/14/MySqlResetPassword/">Mac 重置 MySQL 密码</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote><p>最近升级了系统了也随带升级了 <code>MySql</code> ，在安装时好像有提示<strong>临时密码</strong>，但很不幸我把它忘记了只能重设了。把它写成 <code>Blog</code> 当作笔记方便以后查找也可以给需要的人。</p>
+</blockquote>
+<p>重置 <code>MySql</code> 方法很简单，按如下命令直接输入就好</p>
+<h3 id="1、找到并打开终端"><strong>1、找到并打开终端</strong></h3><p>停止 MySql 运行输入:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/local/mysql/support-files/mysql<span class="variable">.server</span> stop</span><br></pre></td></tr></table></figure>
+<h3 id="2、进入安全模式"><strong>2、进入安全模式</strong></h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</span><br></pre></td></tr></table></figure>
+<h3 id="3、进入MySql"><strong>3、进入MySql</strong></h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/local/mysql/bin/mysql -u root</span><br></pre></td></tr></table></figure>
+<p>终端运行后将出现 <code>mysql&gt;</code> ，这时候输入：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ use mysql</span><br></pre></td></tr></table></figure>
+<h3 id="4、最后输入，即完成密码重置"><strong>4、最后输入，即完成密码重置</strong></h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ALTER USER 'root'@'localhost' IDENTIFIED BY '你的密码','root'@'localhost' PASSWORD EXPIRE NEVER;</span><br><span class="line">$ flush privileges</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySql/">MySql</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-CSSwitch" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -759,66 +823,6 @@
       
         <p class="article-more-link">
           <a  href="/2015/11/03/PullRefreshAnimation/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-SplashView" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/13/SplashView/" class="article-date">
-  	<time datetime="2015-10-12T16:00:00.000Z" itemprop="datePublished">2015-10-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/13/SplashView/">一个简单的过渡动画</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这个动画效果相当的简单没什么难点，但效果还算是不错的。索性就贴出来给有需要的朋友。</p>
-<p><img src="/image/splashView.gif" alt="演示"> </p>
-<p>下面我要看看代码是如何实现的</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Animation/">Animation</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/13/SplashView/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

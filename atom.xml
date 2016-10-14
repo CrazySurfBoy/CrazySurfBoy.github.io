@@ -4,7 +4,7 @@
   <subtitle><![CDATA[爱摄影的码农]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.crazysurfboy.com/"/>
-  <updated>2016-10-13T16:36:24.000Z</updated>
+  <updated>2016-10-14T09:25:14.000Z</updated>
   <id>http://www.crazysurfboy.com/</id>
   
   <author>
@@ -13,6 +13,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Mac 重置 MySQL 密码]]></title>
+    <link href="http://www.crazysurfboy.com/2016/10/14/MySqlResetPassword/"/>
+    <id>http://www.crazysurfboy.com/2016/10/14/MySqlResetPassword/</id>
+    <published>2016-10-13T16:00:00.000Z</published>
+    <updated>2016-10-14T09:25:14.000Z</updated>
+    <content type="html"><![CDATA[<blockquote><p>最近升级了系统了也随带升级了 <code>MySql</code> ，在安装时好像有提示<strong>临时密码</strong>，但很不幸我把它忘记了只能重设了。把它写成 <code>Blog</code> 当作笔记方便以后查找也可以给需要的人。</p>
+</blockquote>
+<p>重置 <code>MySql</code> 方法很简单，按如下命令直接输入就好</p>
+<h3 id="1、找到并打开终端"><strong>1、找到并打开终端</strong></h3><p>停止 MySql 运行输入:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/local/mysql/support-files/mysql<span class="variable">.server</span> stop</span><br></pre></td></tr></table></figure>
+<h3 id="2、进入安全模式"><strong>2、进入安全模式</strong></h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</span><br></pre></td></tr></table></figure>
+<h3 id="3、进入MySql"><strong>3、进入MySql</strong></h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/local/mysql/bin/mysql -u root</span><br></pre></td></tr></table></figure>
+<p>终端运行后将出现 <code>mysql&gt;</code> ，这时候输入：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ use mysql</span><br></pre></td></tr></table></figure>
+<h3 id="4、最后输入，即完成密码重置"><strong>4、最后输入，即完成密码重置</strong></h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ALTER USER 'root'@'localhost' IDENTIFIED BY '你的密码','root'@'localhost' PASSWORD EXPIRE NEVER;</span><br><span class="line">$ flush privileges</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote><p>最近升级了系统了也随带升级了 <code>MySql</code> ，在安装时好像有提示<strong>临时密码</strong>，但很不幸我把它忘记了只能重设了。把它写成 <code>Blog</code> 当作笔记方便以后查找也可以给需要的人。<]]>
+    </summary>
+    
+      <category term="MySql" scheme="http://www.crazysurfboy.com/tags/MySql/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[一个可以完全自定义的 UISwitch]]></title>
